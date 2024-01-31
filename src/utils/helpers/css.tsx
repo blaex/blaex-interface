@@ -55,13 +55,18 @@ export function hideScrollbar() {
 }
 
 export function generateClipPath({
-  type = '1',
+  type = '2',
   diffX = 32,
   diffY = 16,
 }: {
-  type?: '1'
+  type?: '1tr' | '2'
   diffX?: number
   diffY?: number
 }) {
-  return `polygon(0 0, calc(100% - ${diffX}px) 0, 100% ${diffY}px, 100% calc(100% - ${diffY}px), 100% 100%, ${diffX}px 100%, 0 calc(100% - ${diffY}px), 0 0)`
+  switch (type) {
+    case '1tr':
+      return `polygon(0 0, calc(100% - ${diffX}px) 0, 100% ${diffY}px, 100% 100%, 0 100%, 0 0)`
+    default:
+      return `polygon(0 0, calc(100% - ${diffX}px) 0, 100% ${diffY}px, 100% calc(100% - ${diffY}px), 100% 100%, ${diffX}px 100%, 0 calc(100% - ${diffY}px), 0 0)`
+  }
 }
