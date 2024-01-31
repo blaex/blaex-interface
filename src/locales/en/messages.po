@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-01-31 16:22+0700\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#: src/pages/@helpers/ErrorFallback.tsx
+msgid ". Try to reload the page to fix this issue"
+msgstr ". Try to reload the page to fix this issue"
+
+#: src/utils/helpers/handleError.ts
+#: src/utils/helpers/handleError.ts
+#: src/utils/helpers/handleError.ts
+msgid "An error occurs. Please try again"
+msgstr "An error occurs. Please try again"
+
+#: src/pages/@layouts/Navbar/NavUser.tsx
+msgid "Are you sure to logout?"
+msgstr "Are you sure to logout?"
+
+#: src/pages/@layouts/Navbar/NavUser.tsx
+msgid "Back"
+msgstr "Back"
+
+#: src/pages/@helpers/ErrorFallback.tsx
+msgid "Back To Home"
+msgstr "Back To Home"
+
+#: src/components/@ui/NotFound/index.tsx
+msgid "Back to home"
+msgstr "Back to home"
+
+#: src/pages/@layouts/Navbar/NavLinks.tsx
+msgid "Buy"
+msgstr "Buy"
+
+#: src/theme/Buttons/CopyButton.tsx
+msgid "Can't copy"
+msgstr "Can't copy"
+
+#: src/components/AuthWaitingWallet/index.tsx
+#: src/pages/@layouts/Navbar/index.tsx
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Canceled"
+msgstr "Canceled"
+
+#: src/hooks/web3/useAuth.tsx
+msgid "Cannot unlock your wallet"
+msgstr "Cannot unlock your wallet"
+
+#: src/theme/Tag/index.tsx
+msgid "Closed"
+msgstr "Closed"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Communicating with wallet. Sign message with your wallet"
+msgstr "Communicating with wallet. Sign message with your wallet"
+
+#: src/pages/@layouts/Navbar/NavUser.tsx
+msgid "Confirm"
+msgstr "Confirm"
+
+#: src/components/LoginAction/ConnectButton.tsx
+msgid "Connect Wallet"
+msgstr "Connect Wallet"
+
+#: src/pages/@layouts/Navbar/index.tsx
+msgid "Connecting Wallet..."
+msgstr "Connecting Wallet..."
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Connecting with your wallet..."
+msgstr "Connecting with your wallet..."
+
+#: src/theme/Tag/index.tsx
+msgid "Copying"
+msgstr "Copying"
+
+#: src/pages/@layouts/Navbar/NavLinks.tsx
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Disconnect"
+msgstr "Disconnect"
+
+#: src/pages/@layouts/Footer/index.tsx
+#: src/pages/@layouts/Navbar/NavLinks.tsx
+msgid "Docs"
+msgstr "Docs"
+
+#: src/pages/@layouts/Navbar/NavLinks.tsx
+msgid "Earn"
+msgstr "Earn"
+
+#: src/pages/@layouts/Navbar/NavLinks.tsx
+msgid "Ecosystem"
+msgstr "Ecosystem"
+
+#: src/hooks/web3/useAuth.tsx
+#: src/hooks/web3/useContractMutation.tsx
+msgid "Error"
+msgstr "Error"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Hey"
+msgstr "Hey"
+
+#: src/pages/@layouts/Footer/index.tsx
+msgid "Home"
+msgstr "Home"
+
+#: src/utils/helpers/handleError.ts
+msgid "Insufficient funds for gas fee and value"
+msgstr "Insufficient funds for gas fee and value"
+
+#: src/theme/Tag/index.tsx
+msgid "Liquidated"
+msgstr "Liquidated"
+
+#: src/pages/@layouts/Navbar/NavUser.tsx
+msgid "Logout"
+msgstr "Logout"
+
+#: src/theme/Tag/index.tsx
+msgid "Long"
+msgstr "Long"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Looks like you canceled signing of authentication message with your provider"
+msgstr "Looks like you canceled signing of authentication message with your provider"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Looks like you have changed primary address in your wallet. You should sign new authentication message"
+msgstr "Looks like you have changed primary address in your wallet. You should sign new authentication message"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Looks like your session has expired. You should sign new authentication message"
+msgstr "Looks like your session has expired. You should sign new authentication message"
+
+#: src/components/@ui/NotFound/index.tsx
+msgid "Need help?"
+msgstr "Need help?"
+
+#: src/components/@ui/NoDataFound/index.tsx
+#: src/theme/Select/index.tsx
+msgid "No Data Found"
+msgstr "No Data Found"
+
+#: src/theme/Tag/index.tsx
+msgid "Open"
+msgstr "Open"
+
+#: src/hooks/web3/useChainRestrict.tsx
+msgid "Please switch your wallet to {0}"
+msgstr "Please switch your wallet to {0}"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Please unlock your wallet to continue"
+msgstr "Please unlock your wallet to continue"
+
+#: src/pages/@layouts/Navbar/NavLinks.tsx
+msgid "Referrals"
+msgstr "Referrals"
+
+#: src/pages/@helpers/ErrorFallback.tsx
+msgid "Reload"
+msgstr "Reload"
+
+#: src/theme/Tag/index.tsx
+msgid "Running"
+msgstr "Running"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Session Expired"
+msgstr "Session Expired"
+
+#: src/theme/Tag/index.tsx
+msgid "Short"
+msgstr "Short"
+
+#: src/components/@ui/InfiniteLoadmoreButton/index.tsx
+msgid "Show more"
+msgstr "Show more"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Sign message"
+msgstr "Sign message"
+
+#: src/pages/@helpers/ErrorFallback.tsx
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+#: src/theme/Tag/index.tsx
+msgid "Stopped"
+msgstr "Stopped"
+
+#: src/hooks/web3/useContractMutation.tsx
+msgid "Success"
+msgstr "Success"
+
+#: src/components/@ui/NotFound/index.tsx
+msgid "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
+msgstr "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
+
+#: src/components/@ui/NotFound/index.tsx
+msgid "This Page Could Not Be Found"
+msgstr "This Page Could Not Be Found"
+
+#: src/hooks/web3/useContractMutation.tsx
+msgid "Transaction has been executed successfully"
+msgstr "Transaction has been executed successfully"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Try Again"
+msgstr "Try Again"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Unlock"
+msgstr "Unlock"
+
+#: src/hooks/web3/useChainRestrict.tsx
+msgid "Unsupported Network"
+msgstr "Unsupported Network"
+
+#: src/components/AuthWaitingWallet/index.tsx
+msgid "Wallet Locked"
+msgstr "Wallet Locked"
+
+#: src/theme/Tab/IconTabItem.tsx
+msgid "{text}"
+msgstr "{text}"
+
+#: src/pages/@layouts/Footer/index.tsx
+msgid "© 2024 Blaex. All rights reserved."
+msgstr "© 2024 Blaex. All rights reserved."
