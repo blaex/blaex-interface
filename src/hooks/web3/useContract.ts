@@ -4,7 +4,7 @@ import { Web3Provider } from '@ethersproject/providers'
 import { useMemo } from 'react'
 
 import useWeb3 from 'hooks/web3/useWeb3'
-import { CONTRACT_QUERY_KEYS } from 'utils/config/keys'
+import { CONTRACT_KEYS } from 'utils/config/keys'
 import { WalletProviderError } from 'utils/helpers/handleError'
 import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
 import { CONTRACT_ABIS, getContract, getProviderOrSigner } from 'utils/web3/contracts'
@@ -52,21 +52,7 @@ export function useContract<T extends Contract = Contract>({
 
 export function useERC20Contract(erc20Address: string, withSignerIfPossible?: boolean) {
   return useContract({
-    contract: { address: erc20Address, abi: CONTRACT_ABIS[CONTRACT_QUERY_KEYS.ERC20] },
-    withSignerIfPossible,
-  })
-}
-
-export function useSmartAccountContract(address: string, withSignerIfPossible?: boolean) {
-  return useContract({
-    contract: { address, abi: CONTRACT_ABIS[CONTRACT_QUERY_KEYS.SMART_ACCOUNT] },
-    withSignerIfPossible,
-  })
-}
-
-export function useSmartAccountFactoryContract(address: string, withSignerIfPossible?: boolean) {
-  return useContract({
-    contract: { address, abi: CONTRACT_ABIS[CONTRACT_QUERY_KEYS.SMART_ACCOUNT_FACTORY] },
+    contract: { address: erc20Address, abi: CONTRACT_ABIS[CONTRACT_KEYS.ERC20] },
     withSignerIfPossible,
   })
 }

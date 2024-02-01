@@ -1,9 +1,9 @@
 import { useResponsive } from 'ahooks'
 
 import CustomPageTitle from 'components/@ui/CustomPageTitle'
-import { Box, Flex } from 'theme/base'
+import { Box } from 'theme/base'
 
-export default function Home() {
+export default function HomePage() {
   const { md } = useResponsive()
   return (
     <>

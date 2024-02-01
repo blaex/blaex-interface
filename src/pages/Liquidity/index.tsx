@@ -6,7 +6,7 @@ import Divider from 'components/@ui/Divider'
 import { Box, Flex, Type } from 'theme/base'
 import { formatNumber } from 'utils/helpers/format'
 
-export default function Liquidity() {
+export default function LiquidityPage() {
   return (
     <>
       <CustomPageTitle title="Blaex" />
