@@ -27,7 +27,6 @@ const BlastBalance = () => {
   const { data: balance } = useContractQuery<BigNumber>(USDBContract, 'balanceOf', [account?.address], {
     refetchInterval: 5000,
   })
-  console.log('balance', balance?.toString())
   return <Type.Body mt={3}>Your Blast L2 balance: {balance ? formatNumber(formatEther(balance)) : '--'} USDB</Type.Body>
 }
 
