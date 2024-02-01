@@ -102,8 +102,8 @@ TableProps<T, K>) {
               </TableContainer>
             </Box>
             <Box
-              flex="1 0 0"
-              sx={{ overflow: restrictHeight ? 'auto' : 'unset', ...(tableBodyWrapperSx ?? {}) }}
+              flex={restrictHeight ? '1 0 0' : 'unset'}
+              sx={{ overflow: 'auto', ...(tableBodyWrapperSx ?? {}) }}
               ref={isInfiniteLoad ? scrollRef : bodyRef}
             >
               <TableContainer sx={tableBodySx} hasHoverBg={!checkIsTop}>
@@ -225,14 +225,14 @@ export function TableContainer({
         borderCollapse: 'separate',
         '& tbody tr': {
           '&:hover': {
-            background: hasHoverBg ? '#292d40!important' : undefined,
+            bg: hasHoverBg ? 'neutral8' : undefined,
           },
         },
         '& th:first-child, td:first-child': {
           pl: 2,
         },
         '& tbody td': { py: 12, verticalAlign: 'middle' },
-        '& th': { pb: 2, borderBottom: 'small', borderColor: 'neutral4' },
+        '& th': { pb: 2, borderBottom: 'small', borderColor: 'stroke' },
         ...sx,
       }}
     >

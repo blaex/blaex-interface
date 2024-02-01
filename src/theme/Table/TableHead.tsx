@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { TableSelectHandler } from './useTableSelect'
 import Checkbox from 'theme/Checkbox'
 import SortAscIcon from 'theme/Icons/SortAscIcon'
 import SortDefaultIcon from 'theme/Icons/SortDefaultIcon'
@@ -9,6 +8,7 @@ import { Box, Flex, Type } from 'theme/base'
 import { SortTypeEnum } from 'utils/config/enums'
 
 import { ColumnData, ColumnDataParameter, ColumnExternalSourceParameter, TableSortProps } from './types'
+import { TableSelectHandler } from './useTableSelect'
 
 export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSourceParameter>({
   currentSort,
@@ -60,13 +60,13 @@ export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSou
               verticalAlign: 'middle',
             }}
           >
-            <Type.Caption>
+            <Type.Body>
               <Checkbox
                 checked={isSelectedAll}
                 defaultChecked={isSelectedAll}
                 onChange={() => handleSelectedAll(!!isSelectedAll)}
               />
-            </Type.Caption>
+            </Type.Body>
           </th>
         )}
         {columns?.map((column) => {
@@ -81,14 +81,14 @@ export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSou
                   handleChangeSort(column?.sortBy, column?.sortType)
                 }}
                 sx={{
-                  color: column?.sortBy && isCurrentSort ? 'neutral1' : 'inherit',
+                  color: column?.sortBy && isCurrentSort ? 'neutral1' : 'neutral4',
                   '&:hover': {
-                    color: column?.sortBy ? 'neutral2' : 'inherit',
+                    color: column?.sortBy ? 'neutral2' : 'neutral4',
                   },
                 }}
               >
                 {column.sortBy && changeCurrentSort ? (
-                  <Type.Caption fontWeight={isCurrentSort ? 'bold' : 'normal'} sx={{ width: '100%' }}>
+                  <Type.Body fontWeight={isCurrentSort ? 'bold' : 'normal'} sx={{ width: '100%' }}>
                     <Flex alignItems="center" as="span" sx={{ justifyContent: column.style?.textAlign }}>
                       {column.title}
                       {isCurrentSort ? (
@@ -101,9 +101,9 @@ export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSou
                         <SortDefaultIcon />
                       )}
                     </Flex>
-                  </Type.Caption>
+                  </Type.Body>
                 ) : (
-                  <Type.Caption sx={{ width: '100%' }}>{column.title}</Type.Caption>
+                  <Type.Body sx={{ width: '100%' }}>{column.title}</Type.Body>
                 )}
               </Box>
             </Box>

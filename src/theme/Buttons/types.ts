@@ -32,6 +32,7 @@ export const variants = {
   WHITE: 'white',
   LONG: 'long',
   SHORT: 'short',
+  NORMAL: 'normal',
 } as const
 
 export type ButtonProps = {

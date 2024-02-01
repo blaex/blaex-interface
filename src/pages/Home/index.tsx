@@ -3,7 +3,7 @@ import { useResponsive } from 'ahooks'
 import CustomPageTitle from 'components/@ui/CustomPageTitle'
 import { Box } from 'theme/base'
 
-import PlaceOrderForm from './PlaceOrderForm'
+import PositionHistory from './PositionHistory'
 
 export default function HomePage() {
   const { md } = useResponsive()
@@ -11,7 +11,7 @@ export default function HomePage() {
     <>
       <CustomPageTitle title="Blaex" />
       <Box>Home</Box>
-      <PlaceOrderForm />
+      <PositionHistory />
     </>
   )
 }

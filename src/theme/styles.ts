@@ -88,13 +88,13 @@ const ThemedGlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
-    border: 1px solid ${({ theme }) => theme.colors.neutral4};
+    border: 1px solid ${({ theme }) => theme.colors.neutral7};
   }
   ::-webkit-scrollbar-corner {
-    background-color: ${({ theme }) => theme.colors.neutral5};
+    background-color: ${({ theme }) => theme.colors.neutral8};
   }
   ::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.neutral4};
+    background-color: ${({ theme }) => theme.colors.neutral8};
   }
   ::-webkit-scrollbar-track {
     padding: 2px;

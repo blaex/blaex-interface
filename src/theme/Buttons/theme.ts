@@ -3,6 +3,18 @@ import { generateClipPath } from 'utils/helpers/css'
 import { sizes, variants } from './types'
 
 export const styleVariants = {
+  [variants.NORMAL]: {
+    borderRadius: 0,
+    color: 'primary1',
+    fontSize: '16px',
+    bg: 'neutral7',
+    clipPath: generateClipPath({ diffX: 20, diffY: 10 }),
+    transition: '0.3s',
+    '&:hover:not(:disabled),&:active:not(:disabled)': {
+      bg: 'neutral6',
+      clipPath: generateClipPath({ diffX: 28, diffY: 14 }),
+    },
+  },
   [variants.PRIMARY]: {
     borderRadius: 0,
     color: 'neutral8',
