@@ -4,13 +4,36 @@ import { sizes, variants } from './types'
 
 export const styleVariants = {
   [variants.PRIMARY]: {
+    borderRadius: 0,
     color: 'neutral8',
     fontSize: '16px',
     bg: 'primary1',
-    clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
     transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
-      clipPath: generateClipPath({ diffX: 44, diffY: 22 }),
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
+    },
+  },
+  [variants.LONG]: {
+    borderRadius: 0,
+    bg: 'system2',
+    color: 'neutral8',
+    fontSize: '16px',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
+    '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
+    },
+  },
+  [variants.SHORT]: {
+    borderRadius: 0,
+    color: 'neutral1',
+    fontSize: '16px',
+    bg: 'system1',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
+    '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
     },
   },
   [variants.WHITE]: {

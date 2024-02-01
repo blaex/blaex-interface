@@ -21,12 +21,12 @@ export const StyledInput = styled.input`
 
   font-size: 16px;
   line-height: 24px;
-  width: calc(100% * ${ZOOM_INPUT_RATIO});
+  // width: calc(100% * ${ZOOM_INPUT_RATIO});
 
-  transform: scale(${SCALE_INPUT_RATIO});
-  transform-origin: 0 50%;
+  // transform: scale(${SCALE_INPUT_RATIO});
+  // transform-origin: 0 50%;
 
-  margin-right: -12.5%;
+  // margin-right: -12.5%;
 `
 
 const StyledTextarea = styled.textarea`
@@ -58,8 +58,7 @@ export const InputWrapper = styled(Flex)<InputWrapperProps>(
       border: props.border ?? 'small',
       borderColor: 'neutral3',
       borderRadius: 'sm',
-      fontSize: 13,
-      lineHeight: '24px',
+      lineHeight: '1.5em',
       px: '12px',
       py: '8px',
       color: 'inherit',

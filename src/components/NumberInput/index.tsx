@@ -17,9 +17,20 @@ type Props = {
   className?: string
   placeholder?: string
   sx?: any
+  maxLength?: number
 }
 
-function NumberInput({ value = '', inputRef, onValueChange, onFocus, onBlur, className, placeholder, sx }: Props) {
+function NumberInput({
+  value = '',
+  inputRef,
+  onValueChange,
+  onFocus,
+  onBlur,
+  className,
+  placeholder,
+  sx,
+  maxLength,
+}: Props) {
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     if (!onValueChange) return
     // Replace comma with dot
@@ -37,7 +48,7 @@ function NumberInput({ value = '', inputRef, onValueChange, onFocus, onBlur, cla
     <Input
       type="text"
       inputMode="decimal"
-      placeholder={placeholder}
+      placeholder={placeholder || '0.0'}
       className={className}
       value={value}
       ref={inputRef}
@@ -45,11 +56,18 @@ function NumberInput({ value = '', inputRef, onValueChange, onFocus, onBlur, cla
       autoComplete="off"
       autoCorrect="off"
       minLength={1}
-      maxLength={15}
+      maxLength={maxLength || 15}
       spellCheck="false"
       onFocus={onFocus}
       onBlur={onBlur}
-      sx={sx}
+      sx={{
+        border: 'none',
+        bg: 'transparent',
+        p: 0,
+        input: { fontSize: 32, lineHeight: '40px' },
+        'input::placeholder': { color: 'neutral5' },
+        ...(sx || {}),
+      }}
     />
   )
 }

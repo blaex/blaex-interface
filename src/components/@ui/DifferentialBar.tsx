@@ -11,7 +11,12 @@ export function DifferentialBar({
 }) {
   return (
     <Flex width="100%" height={height}>
-      <Box width={`calc(${sourceRate}% - 6px)`} height="100%" bg="green1"></Box>
+      <Box
+        width={`calc(${sourceRate}% - 6px)`}
+        height="100%"
+        bg="system2"
+        sx={{ clipPath: `polygon(0 0, 100% 0, 100% 100%, ${height}px 100%, 0 0)` }}
+      ></Box>
       <Box width="12px" sx={{ position: 'relative' }}>
         <Box
           sx={{
@@ -21,9 +26,9 @@ export function DifferentialBar({
             display: 'inline-block',
             borderStyle: 'solid',
             borderWidth: '4px',
-            borderTopColor: 'green1',
-            borderLeftColor: 'green1',
-            borderBottomColor: 'transparent',
+            borderTopColor: 'transparent',
+            borderLeftColor: 'system2',
+            borderBottomColor: 'system2',
             borderRightColor: 'transparent',
           }}
           width="0"
@@ -37,16 +42,21 @@ export function DifferentialBar({
             display: 'inline-block',
             borderStyle: 'solid',
             borderWidth: '4px',
-            borderTopColor: 'transparent',
+            borderTopColor: 'system1',
             borderLeftColor: 'transparent',
-            borderBottomColor: 'red1',
-            borderRightColor: 'red1',
+            borderBottomColor: 'transparent',
+            borderRightColor: 'system1',
           }}
           width="0"
           height="0"
         ></Box>
       </Box>
-      <Box width={`calc(${targetRate}% - 6px)`} height="100%" bg="red1"></Box>
+      <Box
+        width={`calc(${targetRate}% - 6px)`}
+        height="100%"
+        bg="system1"
+        sx={{ clipPath: `polygon(0 0, calc(100% - ${height}px) 0, 100% 100%, 0 100%, 0 0)` }}
+      ></Box>
     </Flex>
   )
 }

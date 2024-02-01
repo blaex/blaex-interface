@@ -70,13 +70,13 @@ const TABS = [
   { label: 'Sell BLI', value: 'sell' },
 ]
 type TabOption = (typeof TABS)[0]
-const defaultTab = TABS[0]
+const DEFAULT_TAB = TABS[0]
 
 function Form() {
-  const [currentTab, setTab] = useState(defaultTab)
+  const [currentTab, setTab] = useState(DEFAULT_TAB)
   const [amount, setAmount] = useState<string | undefined>(undefined)
   const pAmount = parseInputValue(amount)
-  const isBuy = currentTab.value === defaultTab.value
+  const isBuy = currentTab.value === DEFAULT_TAB.value
   return (
     <Box>
       <TabHeader currentTab={currentTab} onChangeTab={(option) => setTab(option)} />
@@ -84,18 +84,7 @@ function Form() {
         <Flex sx={{ gap: 2 }}>
           <Box>
             <Type.Body mb={3}>Pay</Type.Body>
-            <NumberInput
-              placeholder="0.0"
-              value={amount}
-              onValueChange={(e) => setAmount(e.target.value)}
-              sx={{
-                border: 'none',
-                bg: 'transparent',
-                p: 0,
-                input: { fontSize: 32, lineHeight: '40px' },
-                'input::placeholder': { color: 'neutral5' },
-              }}
-            />
+            <NumberInput placeholder="0.0" value={amount} onValueChange={(e) => setAmount(e.target.value)} />
           </Box>
           {isBuy ? <USDBToken /> : <BLIToken />}
         </Flex>
