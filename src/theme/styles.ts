@@ -179,9 +179,8 @@ const ThemedGlobalStyle = createGlobalStyle`
   }
 
   button[disabled] {
-    opacity: 0.5;
-    // color: ${({ theme }) => theme.colors.neutral4}!important;
-    // background: ${({ theme }) => theme.colors.neutral6}!important;
+    color: ${({ theme }) => theme.colors.neutral4}!important;
+    background: ${({ theme }) => theme.colors.neutral6}!important;
     // border-color: ${({ theme }) => theme.colors.neutral6}!important;
     cursor: not-allowed;
   }

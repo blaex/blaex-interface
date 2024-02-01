@@ -4,8 +4,9 @@ import { ReactNode, useState } from 'react'
 
 import CustomPageTitle from 'components/@ui/CustomPageTitle'
 import Divider from 'components/@ui/Divider'
-import Dropdown, { DropdownItem } from 'theme/Dropdown'
-import Input from 'theme/Input'
+import NumberInput from 'components/NumberInput'
+import { parseInputValue } from 'components/NumberInput/helpers'
+import { Button } from 'theme/Buttons'
 import { Box, Flex, Image, Type } from 'theme/base'
 import { generateClipPath } from 'utils/helpers/css'
 import { formatNumber } from 'utils/helpers/format'
@@ -15,6 +16,7 @@ export default function LiquidityPage() {
     <>
       <CustomPageTitle title="Blaex" />
       <Box sx={{ width: '100%', maxWidth: 1000, mx: 'auto' }}>
+        <Box height={48} />
         <Type.H1 mb={2}>
           <Trans>Liquidity</Trans>
         </Type.H1>
@@ -67,42 +69,25 @@ const TABS = [
   { label: 'Buy BLI', value: 'buy' },
   { label: 'Sell BLI', value: 'sell' },
 ]
-const CURRENCY_OPTIONS = [{ symbol: 'ETH' }, { symbol: 'BTC' }]
+type TabOption = (typeof TABS)[0]
+const defaultTab = TABS[0]
+
 function Form() {
-  const [currentTab, setTab] = useState(TABS[0])
-  const [currentCurrency, setCurrency] = useState(CURRENCY_OPTIONS[0])
-  const isBuy = currentTab.value === TABS[0].value
+  const [currentTab, setTab] = useState(defaultTab)
+  const [amount, setAmount] = useState<string | undefined>(undefined)
+  const pAmount = parseInputValue(amount)
+  const isBuy = currentTab.value === defaultTab.value
   return (
     <Box>
-      <Flex mb={3} sx={{ borderBottom: 'small', borderBottomColor: 'neutral1', '& > *': { flex: 1 } }}>
-        {TABS.map((tab) => {
-          const isActive = currentTab.value === tab.value
-          return (
-            <Box
-              key={tab.value}
-              role="button"
-              sx={{
-                height: 48,
-                lineHeight: '48px',
-                bg: isActive ? 'neutral1' : 'transparent',
-                color: isActive ? 'neutral8' : 'neutral4',
-                textAlign: 'center',
-                clipPath: generateClipPath({ type: '1tr' }),
-                transition: '0.3s',
-              }}
-              onClick={() => setTab(tab)}
-            >
-              {tab.label}
-            </Box>
-          )
-        })}
-      </Flex>
+      <TabHeader currentTab={currentTab} onChangeTab={(option) => setTab(option)} />
       <Box variant="cardPolygon" sx={{ bg: 'neutral7' }}>
         <Flex sx={{ gap: 2 }}>
           <Box>
-            <Type.Body>Pay</Type.Body>
-            <Input
+            <Type.Body mb={3}>Pay</Type.Body>
+            <NumberInput
               placeholder="0.0"
+              value={amount}
+              onValueChange={(e) => setAmount(e.target.value)}
               sx={{
                 border: 'none',
                 bg: 'transparent',
@@ -112,91 +97,115 @@ function Form() {
               }}
             />
           </Box>
-          {isBuy ? (
-            <CurrencyDropdown
-              currentCurrency={currentCurrency}
-              onChangeCurrency={(option: any) => setCurrency(option)}
-            />
-          ) : (
-            <BLIBalance />
-          )}
+          {isBuy ? <USDBToken /> : <BLIToken />}
         </Flex>
       </Box>
-      <Flex sx={{ height: 16, alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
-        <Box
-          sx={{
-            bg: 'primary1',
-            p: 2,
-            height: 40,
-            width: 40,
-            color: 'neutral8',
-            clipPath: generateClipPath({ diffX: 16, diffY: 8 }),
-          }}
-        >
-          <ArrowsDownUp size={24} />
-        </Box>
-      </Flex>
-      <Box variant="cardPolygon" sx={{ bg: 'neutral7' }}>
+      <ArrowSymbol />
+      <Box mb={3} variant="cardPolygon" sx={{ bg: 'neutral7' }}>
         <Flex sx={{ gap: 2 }}>
           <Box flex="1">
-            <Type.Body>Receive</Type.Body>
+            <Type.Body mb={3}>Receive</Type.Body>
             <Type.H3 color="neutral5" sx={{ fontWeight: 'normal' }}>
               32
             </Type.H3>
           </Box>
-          {isBuy ? (
-            <BLIBalance />
-          ) : (
-            <CurrencyDropdown
-              currentCurrency={currentCurrency}
-              onChangeCurrency={(option: any) => setCurrency(option)}
-            />
-          )}
+          {isBuy ? <BLIToken /> : <USDBToken />}
         </Flex>
       </Box>
+      <SubmitButton text={isBuy ? <Trans>Buy</Trans> : <Trans>Sell</Trans>} onSubmit={() => console.log(1)} />
     </Box>
   )
 }
+function TabHeader({ currentTab, onChangeTab }: { currentTab: TabOption; onChangeTab: (option: TabOption) => void }) {
+  return (
+    <Flex mb={3} sx={{ borderBottom: 'small', borderBottomColor: 'neutral1', '& > *': { flex: 1 } }}>
+      {TABS.map((tab) => {
+        const isActive = currentTab.value === tab.value
+        return (
+          <Box
+            key={tab.value}
+            role="button"
+            sx={{
+              height: 48,
+              lineHeight: '48px',
+              fontWeight: 600,
+              bg: isActive ? 'neutral1' : 'transparent',
+              color: isActive ? 'neutral8' : 'neutral4',
+              textAlign: 'center',
+              clipPath: generateClipPath({ type: '1tr' }),
+              transition: '0.3s',
+            }}
+            onClick={() => onChangeTab(tab)}
+          >
+            {tab.label}
+          </Box>
+        )
+      })}
+    </Flex>
+  )
+}
 
-function BLIBalance() {
+function USDBToken() {
   return (
     <Box sx={{ flexShrink: 0 }}>
-      <Type.Body>Balance</Type.Body>
+      <Type.Body mb={3}>Balance</Type.Body>
       <Flex sx={{ gap: 2, height: 40, alignItems: 'center' }}>
-        <Box sx={{ width: 32, height: 32, bg: 'neutral1' }} />
-        <Type.H5 sx={{ fontWeight: 'normal' }}>BLI</Type.H5>
+        <TokenWrapper symbol="ETH" />
       </Flex>
     </Box>
   )
 }
-
-function CurrencyDropdown({ currentCurrency, onChangeCurrency }: { currentCurrency: any; onChangeCurrency: any }) {
+function BLIToken() {
   return (
     <Box sx={{ flexShrink: 0 }}>
-      <Type.Body>Balance</Type.Body>
-      <Dropdown
-        sx={{ p: 0 }}
-        buttonSx={{ p: 0, border: 'none', height: 40 }}
-        menu={
-          <>
-            {CURRENCY_OPTIONS.map((option, index) => {
-              return (
-                <DropdownItem key={index} onClick={() => onChangeCurrency(option)}>
-                  <Flex>
-                    <Image src={`/svg/markets/${option.symbol}.svg`} width={32} height={32} />
-                    <Type.H5>{option.symbol}</Type.H5>
-                  </Flex>
-                </DropdownItem>
-              )
-            })}
-          </>
-        }
-      >
-        <Flex sx={{ gap: 2 }}>
-          <Image src={`/svg/markets/${currentCurrency.symbol}.svg`} width={32} height={32} />
-          <Type.H5 sx={{ fontWeight: 'normal' }}>{currentCurrency.symbol}</Type.H5>
-        </Flex>
-      </Dropdown>
+      <Type.Body mb={3}>Balance</Type.Body>
+      <Flex sx={{ gap: 2, height: 40, alignItems: 'center' }}>
+        <TokenWrapper symbol="ETH" />
+      </Flex>
     </Box>
+  )
+}
+function TokenWrapper({ symbol }: { symbol: string }) {
+  return (
+    <Flex sx={{ gap: 2 }}>
+      <Image src={`/svg/markets/${symbol}.svg`} width={32} height={32} />
+      <Type.H5 sx={{ fontWeight: 'normal' }}>{symbol}</Type.H5>
+    </Flex>
+  )
+}
+
+function SubmitButton({ text, onSubmit }: { text: ReactNode; onSubmit: () => void }) {
+  return (
+    <Button
+      variant="primary"
+      sx={{
+        width: '100%',
+        height: 50,
+        border: 'none',
+        borderRadius: 0,
+      }}
+      onClick={onSubmit}
+    >
+      {text}
+    </Button>
+  )
+}
+
+function ArrowSymbol() {
+  return (
+    <Flex sx={{ height: 16, alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
+      <Box
+        sx={{
+          bg: 'primary1',
+          p: 2,
+          height: 40,
+          width: 40,
+          color: 'neutral8',
+          clipPath: generateClipPath({ diffX: 16, diffY: 8 }),
+        }}
+      >
+        <ArrowsDownUp size={24} />
+      </Box>
+    </Flex>
   )
 }

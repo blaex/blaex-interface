@@ -1,15 +1,16 @@
+import { generateClipPath } from 'utils/helpers/css'
+
 import { sizes, variants } from './types'
 
 export const styleVariants = {
   [variants.PRIMARY]: {
     color: 'neutral8',
+    fontSize: '16px',
     bg: 'primary1',
+    clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
-      bg: 'primary2',
-    },
-    '&:before': {
-      borderColor: 'rgba(0,0,0,0.2)',
-      borderTopColor: 'neutral8',
+      clipPath: generateClipPath({ diffX: 44, diffY: 22 }),
     },
   },
   [variants.WHITE]: {
