@@ -52,20 +52,20 @@ const configs: { route: string; label: ReactNode; matchpath: string }[] = [
     matchpath: ROUTES.LIQUIDITY.path,
   },
   {
-    route: ROUTES.REFERRALS.path,
-    label: <Trans>Referrals</Trans>,
-    matchpath: ROUTES.REFERRALS.path,
+    route: ROUTES.FAUCET.path,
+    label: <Trans>Faucet</Trans>,
+    matchpath: ROUTES.FAUCET.path,
   },
-  {
-    route: ROUTES.ECOSYSTEM.path,
-    label: <Trans>Ecosystem</Trans>,
-    matchpath: ROUTES.ECOSYSTEM.path,
-  },
-  {
-    route: ROUTES.DOCS.path,
-    label: <Trans>Docs</Trans>,
-    matchpath: ROUTES.DOCS.path,
-  },
+  // {
+  //   route: ROUTES.REFERRALS.path,
+  //   label: <Trans>Referrals</Trans>,
+  //   matchpath: ROUTES.REFERRALS.path,
+  // },
+  // {
+  //   route: ROUTES.DOCS.path,
+  //   label: <Trans>Docs</Trans>,
+  //   matchpath: ROUTES.DOCS.path,
+  // },
 ]
 
 function NavLink(props: NavLinkProps & { matchpath: string }) {
@@ -111,7 +111,7 @@ const DesktopWrapper = styled(Box)`
     font-weight: 400;
     font-size: 13px;
     // padding: 0 8px;
-    color: ${({ theme }) => theme.colors.neutral4};
+    color: ${({ theme }) => theme.colors.neutral5};
     // border-bottom: 1px solid transparent;
     // background-position: bottom;
     transition: 0.3s;

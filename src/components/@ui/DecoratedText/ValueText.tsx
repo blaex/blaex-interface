@@ -1,9 +1,7 @@
 import { ReactElement } from 'react'
 
-import useTraderBalances from 'hooks/features/useTraderBalances'
 import Tooltip from 'theme/Tooltip'
 import { Box, Type } from 'theme/base'
-import { ProtocolEnum } from 'utils/config/enums'
 import formatTokenPrices, { formatNumber } from 'utils/helpers/format'
 
 export const ValueText = ({
@@ -78,45 +76,6 @@ export const PercentText = ({
   isInt?: boolean
   digit?: number
 }) => <ValueText value={formatNumber(percent, isInt ? 0 : digit, isInt ? 0 : digit)} suffix="%" />
-
-export const BalanceText = ({
-  protocol,
-  account,
-  maxDigit = 2,
-  minDigit = 2,
-  suffix,
-  prefix = '$',
-  sx,
-  suffixSx,
-  prefixSx,
-}: {
-  protocol: ProtocolEnum
-  account?: string
-  maxDigit?: number
-  minDigit?: number
-  suffix?: string | ReactElement
-  prefix?: string | ReactElement
-  sx?: any
-  suffixSx?: any
-  prefixSx?: any
-}) => {
-  const { balance } = useTraderBalances({
-    account,
-    protocol,
-  })
-  return balance > 0 ? (
-    <ValueText
-      value={formatNumber(balance, maxDigit, minDigit)}
-      suffix={suffix}
-      prefix={prefix}
-      sx={sx}
-      suffixSx={suffixSx}
-      prefixSx={prefixSx}
-    />
-  ) : (
-    <span>--</span>
-  )
-}
 
 export const PriceTokenText = ({
   value,

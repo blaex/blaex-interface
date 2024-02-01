@@ -9,7 +9,6 @@ export const APP_URL = import.meta.env.VITE_URL
 export const LINKS = {
   website: 'https://blaex.io',
   webapp: 'https://app.blaex.io',
-  arbitrumExplorer: 'https://arbiscan.io',
   baseTelegram: 'https://t.me',
   docs: 'https://docs.blaex.io/',
 }
@@ -17,7 +16,8 @@ export const LINKS = {
 export const NAVBAR_HEIGHT = 60
 export const FOOTER_HEIGHT = 40
 
-export const FONT_FAMILY = 'Anuphan'
+export const FONT_FAMILY =
+  'SFRounded, ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 export const DATE_FORMAT = 'YYYY/MM/DD'
 export const DAYJS_FULL_DATE_FORMAT = 'YYYY/MM/DD - HH:mm'
 export const DEFAULT_LIMIT = 20

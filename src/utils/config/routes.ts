@@ -11,15 +11,15 @@ const ROUTES = {
   LIQUIDITY: {
     path: '/liquidity',
   },
-  REFERRALS: {
-    path: '/referrals',
+  // REFERRALS: {
+  //   path: '/referrals',
+  // },
+  FAUCET: {
+    path: '/faucet',
   },
-  ECOSYSTEM: {
-    path: '/ecosystem',
-  },
-  DOCS: {
-    path: '/docs',
-  },
+  // DOCS: {
+  //   path: '/docs',
+  // },
 }
 
 export default ROUTES

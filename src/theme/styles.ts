@@ -5,7 +5,7 @@ import { FONT_FAMILY } from 'utils/config/constants'
 const ThemedGlobalStyle = createGlobalStyle`
   html, body, #root { height: 100% }
   html {
-    font-family: ${FONT_FAMILY}, sans-serif;
+    font-family: ${FONT_FAMILY};
     font-size: 16px;
     line-height: 24px;
     color: ${({ theme }) => theme.colors.neutral1};
@@ -120,7 +120,7 @@ const ThemedGlobalStyle = createGlobalStyle`
     font-size: 16px;
     line-height: 24px;
     color: inherit;
-    font-family: ${FONT_FAMILY}, sans-serif;
+    font-family: ${FONT_FAMILY};
     -webkit-tap-highlight-color: transparent;
   }
   input[type='range']::-ms-track {
@@ -157,7 +157,7 @@ const ThemedGlobalStyle = createGlobalStyle`
     margin: 0;
   }
   button {
-    font-family: ${FONT_FAMILY}, sans-serif;
+    font-family: ${FONT_FAMILY};
     font-weight: bold;
     border: none;
     outline: none;
@@ -297,7 +297,7 @@ input[type=number] {
   }
 
   .axis text {
-      font-family: ${FONT_FAMILY}, sans-serif;
+      font-family: ${FONT_FAMILY};
       font-size: 11px;
       fill: #777E90;
   }

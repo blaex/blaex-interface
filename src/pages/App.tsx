@@ -12,8 +12,9 @@ import QSReader from './@helpers/QSReader'
 import ScrollToTop from './@helpers/ScrollToTop'
 import AppWrapper from './AppWrapper'
 
-const Home = lazy(() => import('./Home'))
-const Liquidity = lazy(() => import('./Liquidity'))
+const HomePage = lazy(() => import('./Home'))
+const LiquidityPage = lazy(() => import('./Liquidity'))
+const FaucetPage = lazy(() => import('./Faucet'))
 
 function App() {
   // useEffect(() => {
@@ -33,8 +34,9 @@ function App() {
           <ScrollToTop />
           <QSReader />
           <Switch>
-            <Route path={ROUTES.LIQUIDITY.path} component={Liquidity}></Route>
-            <Route path={ROUTES.HOME.path} component={Home}></Route>
+            <Route path={ROUTES.LIQUIDITY.path} component={LiquidityPage}></Route>
+            <Route path={ROUTES.FAUCET.path} component={FaucetPage}></Route>
+            <Route path={ROUTES.HOME.path} exact component={HomePage}></Route>
             <Route path="*" component={NotFound}></Route>
           </Switch>
         </Suspense>

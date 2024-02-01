@@ -8,10 +8,11 @@ import { Provider, Web3Provider } from '@ethersproject/providers'
 
 import ERC20_ABI from 'abis/ERC20.json'
 import MULTICALL_ABI from 'abis/Multicall.json'
-import { CONTRACT_QUERY_KEYS } from 'utils/config/keys'
+import USDB_ABI from 'abis/USDB.json'
+import { CONTRACT_KEYS } from 'utils/config/keys'
 import { ContractInfo } from 'utils/web3/types'
 
-import { ARBITRUM_MAINNET, GOERLI, OPTIMISM_GOERLI, OPTIMISM_MAINNET } from './chains'
+import { BLAST_TESTNET, SEPOLIA } from './chains'
 
 export interface ContractKey {
   key: string
@@ -21,8 +22,9 @@ export interface ContractKey {
 export const CONTRACT_ABIS: {
   [key: string]: any
 } = {
-  [CONTRACT_QUERY_KEYS.MULTICALL]: MULTICALL_ABI,
-  [CONTRACT_QUERY_KEYS.ERC20]: ERC20_ABI,
+  [CONTRACT_KEYS.MULTICALL]: MULTICALL_ABI,
+  [CONTRACT_KEYS.USDB]: USDB_ABI,
+  [CONTRACT_KEYS.ERC20]: ERC20_ABI,
 }
 
 export const CONTRACT_ADDRESSES: {
@@ -30,16 +32,18 @@ export const CONTRACT_ADDRESSES: {
     [key: string]: string
   }
 } = {
-  [ARBITRUM_MAINNET]: {
-    [CONTRACT_QUERY_KEYS.MULTICALL]: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  [SEPOLIA]: {
+    [CONTRACT_KEYS.MULTICALL]: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    [CONTRACT_KEYS.BRIDGE]: '0xc644cc19d2A9388b71dd1dEde07cFFC73237Dca8',
+    [CONTRACT_KEYS.USDB]: '0x7f11f79DEA8CE904ed0249a23930f2e59b43a385',
   },
-  [OPTIMISM_MAINNET]: {
-    [CONTRACT_QUERY_KEYS.MULTICALL]: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  [BLAST_TESTNET]: {
+    [CONTRACT_KEYS.MULTICALL]: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    [CONTRACT_KEYS.LIQUIDITY_VAULT]: '0xDF6c354d2e8031E53707E6040de0Cd2ec3610250',
+    [CONTRACT_KEYS.PERPS_VAULT]: '0x97F93b42b7B3b08129164DF01D0634538C84ADAC',
+    [CONTRACT_KEYS.USDB]: '0x4200000000000000000000000000000000000022',
+    [CONTRACT_KEYS.PERPS_MARKET]: '',
   },
-  [OPTIMISM_GOERLI]: {
-    [CONTRACT_QUERY_KEYS.MULTICALL]: '0xcA11bde05977b3631167028862bE2a173976CA11',
-  },
-  [GOERLI]: {},
 }
 
 export function isAddress(value: any): string {
@@ -70,13 +74,6 @@ export function getContract(contract: ContractInfo, signer: Signer | Provider): 
   return new Contract(address, abi, signer)
 }
 
-const getMulticallAddress = (chainId: number): string => {
-  switch (chainId) {
-    default:
-      return '0xcA11bde05977b3631167028862bE2a173976CA11'
-  }
-}
-
 export const getMulticallContract = (chainId: number, provider: Signer | Provider) => {
   return getContract({ address: CONTRACT_ADDRESSES[chainId]['MULTICALL'], abi: MULTICALL_ABI }, provider)
 }
@@ -93,7 +90,7 @@ export const getResultFromReceipt = (receipt: TransactionReceipt, contract: Cont
 export const BLOCK_WAITING_SECONDS: {
   [key: number]: number
 } = {
-  [ARBITRUM_MAINNET]: 12,
+  [BLAST_TESTNET]: 12,
 }
 
 export const getDelayTime = (chainId: number) => {
