@@ -1,4 +1,5 @@
-import { formatEther } from '@ethersproject/units'
+import { BigNumber } from '@ethersproject/bignumber'
+import { formatEther, parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { ArrowsDownUp } from '@phosphor-icons/react'
 import { ReactNode, useState } from 'react'
@@ -8,11 +9,19 @@ import Divider from 'components/@ui/Divider'
 import NumberInput from 'components/NumberInput'
 import { parseInputValue } from 'components/NumberInput/helpers'
 import useBalancesStore from 'hooks/store/useBalancesManagement'
+import { useAuthContext } from 'hooks/web3/useAuth'
+import { useLiquidityVaultContract } from 'hooks/web3/useContract'
+import useContractMutation from 'hooks/web3/useContractMutation'
+import useContractQuery from 'hooks/web3/useContractQuery'
+import useERC20Approval from 'hooks/web3/useTokenApproval'
 import { Button } from 'theme/Buttons'
 import { Box, Flex, Image, Type } from 'theme/base'
+import { CONTRACT_KEYS } from 'utils/config/keys'
 import { generateClipPath } from 'utils/helpers/css'
 import { formatNumber } from 'utils/helpers/format'
 import { parseMarketImageSrc } from 'utils/helpers/transform'
+import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
+import { CONTRACT_ADDRESSES } from 'utils/web3/contracts'
 
 export default function LiquidityPage() {
   return (
@@ -39,7 +48,7 @@ function Overview() {
   return (
     <Box sx={{ bg: 'background2', borderRadius: 'sm', p: 3 }}>
       <Flex sx={{ alignItems: 'center', gap: 3 }}>
-        <Box sx={{ width: 48, height: 48, flexShrink: 0, bg: 'neutral1', borderRadius: '50%' }} />
+        <TokenWrapper symbol="BLI" size={48} hasText={false} />
         <Box>
           <Type.Body sx={{ display: 'block' }}>BLI</Type.Body>
           <Type.Caption color="neutral5">
@@ -76,10 +85,30 @@ type TabOption = (typeof TABS)[0]
 const DEFAULT_TAB = TABS[0]
 
 function Form() {
+  const { account } = useAuthContext()
   const [currentTab, setTab] = useState(DEFAULT_TAB)
   const [amount, setAmount] = useState<string | undefined>(undefined)
-  const pAmount = parseInputValue(amount)
+  const amountIn = parseInputValue(amount)
   const isBuy = currentTab.value === DEFAULT_TAB.value
+  const LiquidityVaultContract = useLiquidityVaultContract(true)
+  const { data: amountOut } = useContractQuery<BigNumber>(
+    LiquidityVaultContract,
+    isBuy ? 'getSharesByPooledToken' : 'getPooledTokenByShares',
+    [parseEther(amountIn.toString())],
+    {
+      enabled: amountIn > 0,
+    }
+  )
+  const { isTokenAllowanceEnough, approving, approveToken } = useERC20Approval({
+    token: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
+    account: account?.address,
+    spender: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.LIQUIDITY_VAULT],
+  })
+
+  const { isLoading: submitting, mutate } = useContractMutation(LiquidityVaultContract)
+
+  const approvedEnough = !isBuy || isTokenAllowanceEnough(amountIn)
+
   return (
     <Box>
       <TabHeader currentTab={currentTab} onChangeTab={(option) => setTab(option)} />
@@ -109,14 +138,34 @@ function Form() {
         <Flex sx={{ gap: 2 }}>
           <Box flex="1">
             <Type.Body mb={3}>Receive</Type.Body>
-            <Type.H3 color="neutral5" sx={{ fontWeight: 'normal' }}>
-              32
+            <Type.H3 color="neutral1" sx={{ fontWeight: 'normal' }}>
+              {amountOut == null
+                ? '--'
+                : !amountOut.isZero()
+                ? formatNumber(formatEther(amountOut))
+                : formatNumber(amountIn)}
             </Type.H3>
           </Box>
           {isBuy ? <BLIToken /> : <USDBToken />}
         </Flex>
       </Box>
-      <SubmitButton text={isBuy ? <Trans>Buy</Trans> : <Trans>Sell</Trans>} onSubmit={() => console.log(1)} />
+      <SubmitButton
+        isLoading={approving || submitting}
+        disabled={approving || submitting}
+        text={<>{isBuy ? approvedEnough ? <Trans>Buy</Trans> : <Trans>Approve</Trans> : <Trans>Sell</Trans>}</>}
+        onSubmit={() => {
+          if (approvedEnough) {
+            mutate(
+              { method: isBuy ? 'deposit' : 'withdraw', params: [parseEther(amountIn.toString())] },
+              {
+                onSuccess: () => setAmount(undefined),
+              }
+            )
+            return
+          }
+          approveToken(amountIn)
+        }}
+      />
     </Box>
   )
 }
@@ -155,34 +204,47 @@ function USDBToken() {
     <Flex sx={{ flexShrink: 0, flexDirection: 'column', alignItems: 'end' }}>
       <Type.Body mb={3}>Balance: {USDB ? formatNumber(formatEther(USDB)) + ' USDB' : '--'}</Type.Body>
       <Flex sx={{ gap: 2, height: 40, alignItems: 'center' }}>
-        <TokenWrapper symbol="BLI" />
+        <TokenWrapper symbol="USDB" />
       </Flex>
     </Flex>
   )
 }
 function BLIToken() {
+  const { BLI } = useBalancesStore((state) => state.balances)
   return (
     <Flex sx={{ flexShrink: 0, flexDirection: 'column', alignItems: 'end' }}>
-      <Type.Body mb={3}>Balance</Type.Body>
+      <Type.Body mb={3}>Balance: {BLI ? formatNumber(formatEther(BLI)) + ' BLI' : '--'}</Type.Body>
       <Flex sx={{ gap: 2, height: 40, alignItems: 'center' }}>
-        <TokenWrapper symbol="ETH" />
+        <TokenWrapper symbol="BLI" />
       </Flex>
     </Flex>
   )
 }
-function TokenWrapper({ symbol, hasText = true }: { symbol: string; hasText?: boolean }) {
+function TokenWrapper({ symbol, size, hasText = true }: { symbol: string; size?: number; hasText?: boolean }) {
   return (
     <Flex sx={{ gap: 2 }}>
-      <Image src={parseMarketImageSrc(symbol)} width={32} height={32} />
+      <Image src={parseMarketImageSrc(symbol)} width={size ?? 32} height={size ?? 32} />
       {hasText && <Type.H5 sx={{ fontWeight: 'normal' }}>{symbol}</Type.H5>}
     </Flex>
   )
 }
 
-function SubmitButton({ text, onSubmit }: { text: ReactNode; onSubmit: () => void }) {
+function SubmitButton({
+  text,
+  disabled,
+  isLoading,
+  onSubmit,
+}: {
+  text: ReactNode
+  disabled?: boolean
+  isLoading?: boolean
+  onSubmit: () => void
+}) {
   return (
     <Button
       variant="primary"
+      disabled={disabled}
+      isLoading={isLoading}
       sx={{
         width: '100%',
         height: 50,

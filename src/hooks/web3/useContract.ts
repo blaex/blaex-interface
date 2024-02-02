@@ -7,7 +7,7 @@ import useWeb3 from 'hooks/web3/useWeb3'
 import { CONTRACT_KEYS } from 'utils/config/keys'
 import { WalletProviderError } from 'utils/helpers/handleError'
 import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
-import { CONTRACT_ABIS, getContract, getProviderOrSigner } from 'utils/web3/contracts'
+import { CONTRACT_ABIS, CONTRACT_ADDRESSES, getContract, getProviderOrSigner } from 'utils/web3/contracts'
 import { getSimpleRpcProvider } from 'utils/web3/getRpcUrl'
 import { ContractInfo } from 'utils/web3/types'
 
@@ -53,6 +53,16 @@ export function useContract<T extends Contract = Contract>({
 export function useERC20Contract(erc20Address: string, withSignerIfPossible?: boolean) {
   return useContract({
     contract: { address: erc20Address, abi: CONTRACT_ABIS[CONTRACT_KEYS.ERC20] },
+    withSignerIfPossible,
+  })
+}
+
+export function useLiquidityVaultContract(withSignerIfPossible?: boolean) {
+  return useContract({
+    contract: {
+      address: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.LIQUIDITY_VAULT],
+      abi: CONTRACT_ABIS[CONTRACT_KEYS.LIQUIDITY_VAULT],
+    },
     withSignerIfPossible,
   })
 }
