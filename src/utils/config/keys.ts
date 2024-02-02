@@ -1,4 +1,6 @@
-export const QUERY_KEYS = {}
+export const QUERY_KEYS = {
+  GET_PRICE_HISTORIES: 'GET_PRICE_HISTORIES',
+}
 
 export const CONTRACT_KEYS = {
   MULTICALL: 'MULTICALL',
