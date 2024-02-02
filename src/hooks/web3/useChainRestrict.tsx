@@ -21,14 +21,19 @@ const useChainRestrict = () => {
     if (!SUPPORTED_CHAIN_IDS.includes(parseInt(connectedChain.id, 16))) {
       showDialog({
         id: 'RESTRICT_CHAIN',
-        title: <Trans>Unsupported Network</Trans>,
+        title: (
+          <Box p={3} pb={0}>
+            <Trans>Unsupported Network</Trans>
+          </Box>
+        ),
         body: (
-          <Box>
+          <Box p={3} pt={0}>
             <Type.Caption display="block" mb={3}>
               <Trans>Please switch your wallet to {defaultChain.label}</Trans>
             </Type.Caption>
             <Button
               variant="primary"
+              height={40}
               onClick={() =>
                 setChain({
                   chainId: `0x${DEFAULT_CHAIN_ID.toString(16)}`,
