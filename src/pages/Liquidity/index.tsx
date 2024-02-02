@@ -1,3 +1,4 @@
+import { formatEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { ArrowsDownUp } from '@phosphor-icons/react'
 import { ReactNode, useState } from 'react'
@@ -6,10 +7,12 @@ import CustomPageTitle from 'components/@ui/CustomPageTitle'
 import Divider from 'components/@ui/Divider'
 import NumberInput from 'components/NumberInput'
 import { parseInputValue } from 'components/NumberInput/helpers'
+import useBalancesStore from 'hooks/store/useBalancesManagement'
 import { Button } from 'theme/Buttons'
 import { Box, Flex, Image, Type } from 'theme/base'
 import { generateClipPath } from 'utils/helpers/css'
 import { formatNumber } from 'utils/helpers/format'
+import { parseMarketImageSrc } from 'utils/helpers/transform'
 
 export default function LiquidityPage() {
   return (
@@ -36,7 +39,7 @@ function Overview() {
   return (
     <Box sx={{ bg: 'background2', borderRadius: 'sm', p: 3 }}>
       <Flex sx={{ alignItems: 'center', gap: 3 }}>
-        <Box sx={{ width: 48, height: 48, flexShrink: 0, bg: 'neutral1' }} />
+        <Box sx={{ width: 48, height: 48, flexShrink: 0, bg: 'neutral1', borderRadius: '50%' }} />
         <Box>
           <Type.Body sx={{ display: 'block' }}>BLI</Type.Body>
           <Type.Caption color="neutral5">
@@ -135,30 +138,31 @@ function TabHeader({ currentTab, onChangeTab }: { currentTab: TabOption; onChang
 }
 
 function USDBToken() {
+  const { USDB } = useBalancesStore((state) => state.balances)
   return (
-    <Box sx={{ flexShrink: 0 }}>
-      <Type.Body mb={3}>Balance</Type.Body>
+    <Flex sx={{ flexShrink: 0, flexDirection: 'column', alignItems: 'end' }}>
+      <Type.Body mb={3}>Balance: {USDB ? formatNumber(formatEther(USDB)) + ' USDB' : '--'}</Type.Body>
       <Flex sx={{ gap: 2, height: 40, alignItems: 'center' }}>
-        <TokenWrapper symbol="ETH" />
+        <TokenWrapper symbol="BLI" />
       </Flex>
-    </Box>
+    </Flex>
   )
 }
 function BLIToken() {
   return (
-    <Box sx={{ flexShrink: 0 }}>
+    <Flex sx={{ flexShrink: 0, flexDirection: 'column', alignItems: 'end' }}>
       <Type.Body mb={3}>Balance</Type.Body>
       <Flex sx={{ gap: 2, height: 40, alignItems: 'center' }}>
         <TokenWrapper symbol="ETH" />
       </Flex>
-    </Box>
+    </Flex>
   )
 }
-function TokenWrapper({ symbol }: { symbol: string }) {
+function TokenWrapper({ symbol, hasText = true }: { symbol: string; hasText?: boolean }) {
   return (
     <Flex sx={{ gap: 2 }}>
-      <Image src={`/svg/markets/${symbol}.svg`} width={32} height={32} />
-      <Type.H5 sx={{ fontWeight: 'normal' }}>{symbol}</Type.H5>
+      <Image src={parseMarketImageSrc(symbol)} width={32} height={32} />
+      {hasText && <Type.H5 sx={{ fontWeight: 'normal' }}>{symbol}</Type.H5>}
     </Flex>
   )
 }

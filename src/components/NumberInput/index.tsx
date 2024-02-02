@@ -64,7 +64,7 @@ function NumberInput({
         border: 'none',
         bg: 'transparent',
         p: 0,
-        input: { fontSize: 32, lineHeight: '40px' },
+        input: { fontSize: 32, lineHeight: '40px', width: '100%' },
         'input::placeholder': { color: 'neutral5' },
         ...(sx || {}),
       }}

@@ -107,3 +107,7 @@ export function getPaginationDataFromList<T>({
   const slicedData = data.slice(currentOffset, currentOffset + limit > total ? undefined : currentOffset + limit)
   return { data: slicedData, meta: { limit, offset: currentOffset, total, totalPages: Math.ceil(total / limit) } }
 }
+
+export function parseMarketImageSrc(symbol: string) {
+  return `/svg/markets/${symbol}.svg`
+}
