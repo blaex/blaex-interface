@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { ToastContainer } from 'react-toastify'
 
+import { InitBalancesStore } from 'hooks/store/useBalancesManagement'
 import useGlobalDialog from 'hooks/store/useGlobalDialog'
 import useChainRestrict from 'hooks/web3/useChainRestrict'
 import useEagerConnect from 'hooks/web3/useEagerConnect'
@@ -17,6 +18,7 @@ const AppWrapper = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
+      <InitBalancesStore />
       <Flex className="app_wrapper" sx={{ height: '100%', flexDirection: 'column' }}>
         <Navbar height={NAVBAR_HEIGHT} />
         <Box id={ELEMENT_IDS.APP_MAIN_WRAPPER} width="100%" flex="1" sx={{ position: 'relative', overflowY: 'auto' }}>

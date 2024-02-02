@@ -165,10 +165,10 @@ export const Type = {
     )
   },
   Caption(props: TextProps) {
-    return <TextWrapper fontSize="13px" lineHeight="22px" fontWeight="normal" display="inline-block" {...props} />
+    return <TextWrapper fontSize="14px" lineHeight="24px" fontWeight="normal" display="inline-block" {...props} />
   },
   CaptionBold(props: TextProps) {
-    return <TextWrapper fontSize="13px" lineHeight="22px" fontWeight="bold" display="inline-block" {...props} />
+    return <TextWrapper fontSize="14px" lineHeight="24px" fontWeight="bold" display="inline-block" {...props} />
   },
   Small(props: TextProps) {
     return <TextWrapper fontSize="12px" lineHeight="16px" fontWeight="normal" display="inline-block" {...props} />

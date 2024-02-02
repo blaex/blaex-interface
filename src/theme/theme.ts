@@ -95,7 +95,8 @@ function theme(darkMode: boolean): DefaultTheme {
         bg: 'background3',
         borderRadius: '8px',
       },
-      specialCard: {
+      cardPolygon: {
+        p: 3,
         bg: 'neutral6',
         clipPath: generateClipPath({}),
       },
@@ -121,7 +122,7 @@ function theme(darkMode: boolean): DefaultTheme {
       },
       tag: {
         bg: 'neutral7',
-        borderRadius: 'sm',
+        borderRadius: 0,
         px: 1,
       },
       tagGradient: {

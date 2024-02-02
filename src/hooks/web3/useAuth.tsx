@@ -6,12 +6,12 @@ import dayjs from 'dayjs'
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { getStoredWallet, storeAuth } from 'apis/helpers'
 import ToastBody from 'components/@ui/ToastBody'
 import WaitingWallet, { WaitingState } from 'components/AuthWaitingWallet'
-import useParsedQueryString from 'hooks/router/useParsedQueryString'
+import { BLAST_TESTNET } from 'utils/web3/chains'
+import { getSimpleRpcProvider } from 'utils/web3/getRpcUrl'
 import { Account } from 'utils/web3/types'
-import { signVerifyCode } from 'utils/web3/wallet'
-import { getStoredWallet, storeAuth } from 'apis/helpers'
 
 const getAccount = (wallet: WalletState) => wallet.accounts[0] as any as Account
 
@@ -21,6 +21,7 @@ interface ContextValues {
   account: Account | null
   updateBalances: () => void
   provider: Web3Provider | null
+  blastProvider: Web3Provider
   connect: ({ skipAuth }: { skipAuth?: boolean }) => Promise<Account | null>
   disconnect: () => void
   logout: () => void
@@ -166,6 +167,7 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
       account: wallet ? getAccount(wallet) : null,
       updateBalances,
       provider: wallet ? new Web3Provider(wallet.provider, 'any') : null,
+      blastProvider: new Web3Provider(getSimpleRpcProvider(BLAST_TESTNET) as any),
       connect,
       disconnect,
       logout,

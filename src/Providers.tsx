@@ -24,9 +24,7 @@ const Providers = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
         <QueryClientProvider client={queryClient}>
           {/* <Updaters /> */}
           <BrowserRouter>
-            <DappProvider>
-              {children}
-            </DappProvider>
+            <DappProvider>{children}</DappProvider>
           </BrowserRouter>
         </QueryClientProvider>
       </LanguageProvider>

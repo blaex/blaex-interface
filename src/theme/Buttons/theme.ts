@@ -1,15 +1,53 @@
+import { generateClipPath } from 'utils/helpers/css'
+
 import { sizes, variants } from './types'
 
 export const styleVariants = {
-  [variants.PRIMARY]: {
-    color: 'neutral8',
-    bg: 'primary1',
+  [variants.NORMAL]: {
+    borderRadius: 0,
+    color: 'primary1',
+    fontSize: '16px',
+    bg: 'neutral7',
+    clipPath: generateClipPath({ diffX: 16, diffY: 8 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
-      bg: 'primary2',
+      bg: 'neutral6',
+      clipPath: generateClipPath({ diffX: 20, diffY: 10 }),
     },
-    '&:before': {
-      borderColor: 'rgba(0,0,0,0.2)',
-      borderTopColor: 'neutral8',
+  },
+  [variants.PRIMARY]: {
+    borderRadius: 0,
+    color: 'neutral8',
+    fontSize: '16px',
+    bg: 'primary1',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
+    '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
+    },
+  },
+  [variants.LONG]: {
+    borderRadius: 0,
+    bg: 'system2',
+    color: 'neutral8',
+    fontSize: '16px',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
+    '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 28, diffY: 14 }),
+      filter: 'brightness(120%)',
+    },
+  },
+  [variants.SHORT]: {
+    borderRadius: 0,
+    color: 'neutral1',
+    fontSize: '16px',
+    bg: 'system1',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
+    '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 28, diffY: 14 }),
+      filter: 'brightness(130%)',
     },
   },
   [variants.WHITE]: {

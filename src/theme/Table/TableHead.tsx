@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { TableSelectHandler } from './useTableSelect'
 import Checkbox from 'theme/Checkbox'
 import SortAscIcon from 'theme/Icons/SortAscIcon'
 import SortDefaultIcon from 'theme/Icons/SortDefaultIcon'
@@ -9,6 +8,7 @@ import { Box, Flex, Type } from 'theme/base'
 import { SortTypeEnum } from 'utils/config/enums'
 
 import { ColumnData, ColumnDataParameter, ColumnExternalSourceParameter, TableSortProps } from './types'
+import { TableSelectHandler } from './useTableSelect'
 
 export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSourceParameter>({
   currentSort,
@@ -81,9 +81,9 @@ export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSou
                   handleChangeSort(column?.sortBy, column?.sortType)
                 }}
                 sx={{
-                  color: column?.sortBy && isCurrentSort ? 'neutral1' : 'inherit',
+                  color: column?.sortBy && isCurrentSort ? 'neutral1' : 'neutral4',
                   '&:hover': {
-                    color: column?.sortBy ? 'neutral2' : 'inherit',
+                    color: column?.sortBy ? 'neutral2' : 'neutral4',
                   },
                 }}
               >

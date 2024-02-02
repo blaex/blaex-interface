@@ -17,7 +17,7 @@ export const NAVBAR_HEIGHT = 60
 export const FOOTER_HEIGHT = 40
 
 export const FONT_FAMILY =
-  'SFRounded, ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+  'Inter, SFRounded, ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 export const DATE_FORMAT = 'YYYY/MM/DD'
 export const DAYJS_FULL_DATE_FORMAT = 'YYYY/MM/DD - HH:mm'
 export const DEFAULT_LIMIT = 20
