@@ -7,8 +7,8 @@ import { formatNumber } from 'utils/helpers/format'
 
 export default function PositionHistory() {
   return (
-    <Box sx={{ width: '100%', overflow: 'hidden' }}>
-      <Table data={[{}, {}, {}, {}, {}, {}]} isLoading={false} columns={columns} />
+    <Box sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+      <Table data={[{}, {}, {}, {}, {}, {}]} restrictHeight isLoading={false} columns={columns} />
     </Box>
   )
 }

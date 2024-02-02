@@ -38,9 +38,16 @@ const MintAction = () => {
     )
   }
   return (
-    <Box mt={3}>
+    <Box>
       {!tx ? (
-        <Button variant="primary" block disabled={isLoading} isLoading={isLoading} onClick={handleMint}>
+        <Button
+          variant="primary"
+          block
+          disabled={isLoading}
+          isLoading={isLoading}
+          onClick={handleMint}
+          sx={{ height: 48 }}
+        >
           <Trans>Mint</Trans>
         </Button>
       ) : (

@@ -53,7 +53,7 @@ const BridgeAction = () => {
   }
   const approvedEnough = isTokenAllowanceEnough(10000)
   return (
-    <Box mt={3}>
+    <Box>
       {!tx ? (
         <Flex sx={{ gap: 3 }}>
           <Button
@@ -62,6 +62,7 @@ const BridgeAction = () => {
             disabled={approvedEnough || approving}
             isLoading={approving}
             onClick={() => approveToken(10000)}
+            sx={{ height: 48 }}
           >
             <Trans>Approve</Trans>
           </Button>
@@ -71,6 +72,7 @@ const BridgeAction = () => {
             disabled={isLoading || approving || !approvedEnough}
             isLoading={isLoading}
             onClick={handleBridge}
+            sx={{ height: 48 }}
           >
             <Trans>Bridge</Trans>
           </Button>
