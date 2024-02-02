@@ -109,7 +109,7 @@ const DesktopWrapper = styled(Box)`
     justify-content: center;
     align-items: center;
     font-weight: 400;
-    font-size: 13px;
+    font-size: 14px;
     // padding: 0 8px;
     color: ${({ theme }) => theme.colors.neutral5};
     // border-bottom: 1px solid transparent;
@@ -137,7 +137,7 @@ const MobileWrapper = styled(Box)`
   .navlink-default {
     display: block;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 14px;
     color: ${({ theme }) => theme.colors.neutral1};
   }
   .navlink-active {

@@ -44,6 +44,7 @@ function Tabs({ currentTab, onChangeTab }: { currentTab: TabOption; onChangeTab:
               height: '100%',
               borderRadius: 0,
               fontSize: '16px',
+              fontWeight: 'normal',
               ...(isActive
                 ? { color: 'neutral1', borderBottom: 'small', borderBottomColor: 'neutral1' }
                 : { color: 'neutral5' }),

@@ -122,7 +122,7 @@ function theme(darkMode: boolean): DefaultTheme {
       },
       tag: {
         bg: 'neutral7',
-        borderRadius: 'sm',
+        borderRadius: 0,
         px: 1,
       },
       tagGradient: {

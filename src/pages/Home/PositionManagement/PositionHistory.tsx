@@ -24,8 +24,8 @@ const columns: any = [
         <Flex alignItems="center" justifyContent="start" sx={{ gap: 2 }}>
           <Box width={24} height={24} bg="neutral1" />
           <Box>
-            <Type.Body display="block">ETH / USD</Type.Body>
-            <Type.Body>Short</Type.Body>
+            <Type.Caption display="block">ETH / USD</Type.Caption>
+            <Type.Caption>Short</Type.Caption>
           </Box>
         </Flex>
       )
@@ -37,7 +37,7 @@ const columns: any = [
     key: undefined,
     style: { minWidth: '100px', textAlign: 'right' },
     render: (item: any) => {
-      return <Type.Body>${formatNumber(123123)}</Type.Body>
+      return <Type.Caption>${formatNumber(123123)}</Type.Caption>
     },
   },
   {
@@ -46,7 +46,7 @@ const columns: any = [
     key: undefined,
     style: { minWidth: '100px', textAlign: 'right' },
     render: (item: any) => {
-      return <Type.Body>${formatNumber(123123)}</Type.Body>
+      return <Type.Caption>${formatNumber(123123)}</Type.Caption>
     },
   },
   {
@@ -58,10 +58,10 @@ const columns: any = [
       return (
         <Flex sx={{ width: '100%', justifyContent: 'end', gap: 3 }}>
           <Box>
-            <Type.Body display="block">${formatNumber(123123)}</Type.Body>
-            <Type.Body>{formatNumber(123123)}ETH</Type.Body>
+            <Type.Caption display="block">${formatNumber(123123)}</Type.Caption>
+            <Type.Caption>{formatNumber(123123)}ETH</Type.Caption>
           </Box>
-          <Button variant="normal">
+          <Button variant="normal" p={2} height={40}>
             <Pencil size={24} />
           </Button>
         </Flex>
@@ -74,7 +74,7 @@ const columns: any = [
     key: undefined,
     style: { minWidth: '130px', textAlign: 'right' },
     render: (item: any) => {
-      return <Type.Body>${formatNumber(123123)}</Type.Body>
+      return <Type.Caption>${formatNumber(123123)}</Type.Caption>
     },
   },
   {
@@ -83,7 +83,7 @@ const columns: any = [
     key: undefined,
     style: { minWidth: '130px', textAlign: 'right' },
     render: (item: any) => {
-      return <Type.Body>${formatNumber(123123)}</Type.Body>
+      return <Type.Caption>${formatNumber(123123)}</Type.Caption>
     },
   },
   {
@@ -94,8 +94,8 @@ const columns: any = [
     render: (item: any) => {
       return (
         <Box>
-          <Type.Body display="block">${formatNumber(123123)}</Type.Body>
-          <Type.Body>${formatNumber(123123)}</Type.Body>
+          <Type.Caption display="block">${formatNumber(123123)}</Type.Caption>
+          <Type.Caption>${formatNumber(123123)}</Type.Caption>
         </Box>
       )
     },
@@ -109,10 +109,10 @@ const columns: any = [
       return (
         <Flex sx={{ width: '100%', justifyContent: 'end', gap: 3 }}>
           <Box>
-            <Type.Body display="block">${formatNumber(123123)}</Type.Body>
-            <Type.Body>{formatNumber(123123)}ETH</Type.Body>
+            <Type.Caption display="block">${formatNumber(123123)}</Type.Caption>
+            <Type.Caption>{formatNumber(123123)}ETH</Type.Caption>
           </Box>
-          <Button variant="normal">
+          <Button variant="normal" p={2} height={40}>
             <Pencil size={24} />
           </Button>
         </Flex>
@@ -126,7 +126,7 @@ const columns: any = [
     style: { minWidth: '100px', textAlign: 'right' },
     render: (item: any) => {
       return (
-        <Button variant="normal">
+        <Button variant="normal" height={40} sx={{ fontWeight: 'normal' }}>
           {/* <Pencil size={24} /> */}
           Close
         </Button>
@@ -141,7 +141,7 @@ const columns: any = [
     render: (item: any) => {
       return (
         <Box pr={3}>
-          <Button variant="normal">
+          <Button variant="normal" p={2} height={40}>
             <Export size={24} />
           </Button>
         </Box>

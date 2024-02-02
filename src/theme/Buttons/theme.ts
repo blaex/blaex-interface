@@ -8,11 +8,11 @@ export const styleVariants = {
     color: 'primary1',
     fontSize: '16px',
     bg: 'neutral7',
-    clipPath: generateClipPath({ diffX: 20, diffY: 10 }),
+    clipPath: generateClipPath({ diffX: 16, diffY: 8 }),
     transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
       bg: 'neutral6',
-      clipPath: generateClipPath({ diffX: 28, diffY: 14 }),
+      clipPath: generateClipPath({ diffX: 20, diffY: 10 }),
     },
   },
   [variants.PRIMARY]: {
@@ -34,7 +34,8 @@ export const styleVariants = {
     clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
     transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
-      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
+      clipPath: generateClipPath({ diffX: 28, diffY: 14 }),
+      filter: 'brightness(120%)',
     },
   },
   [variants.SHORT]: {
@@ -45,7 +46,8 @@ export const styleVariants = {
     clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
     transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
-      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
+      clipPath: generateClipPath({ diffX: 28, diffY: 14 }),
+      filter: 'brightness(130%)',
     },
   },
   [variants.WHITE]: {

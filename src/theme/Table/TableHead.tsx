@@ -60,13 +60,13 @@ export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSou
               verticalAlign: 'middle',
             }}
           >
-            <Type.Body>
+            <Type.Caption>
               <Checkbox
                 checked={isSelectedAll}
                 defaultChecked={isSelectedAll}
                 onChange={() => handleSelectedAll(!!isSelectedAll)}
               />
-            </Type.Body>
+            </Type.Caption>
           </th>
         )}
         {columns?.map((column) => {
@@ -88,7 +88,7 @@ export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSou
                 }}
               >
                 {column.sortBy && changeCurrentSort ? (
-                  <Type.Body fontWeight={isCurrentSort ? 'bold' : 'normal'} sx={{ width: '100%' }}>
+                  <Type.Caption fontWeight={isCurrentSort ? 'bold' : 'normal'} sx={{ width: '100%' }}>
                     <Flex alignItems="center" as="span" sx={{ justifyContent: column.style?.textAlign }}>
                       {column.title}
                       {isCurrentSort ? (
@@ -101,9 +101,9 @@ export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSou
                         <SortDefaultIcon />
                       )}
                     </Flex>
-                  </Type.Body>
+                  </Type.Caption>
                 ) : (
-                  <Type.Body sx={{ width: '100%' }}>{column.title}</Type.Body>
+                  <Type.Caption sx={{ width: '100%' }}>{column.title}</Type.Caption>
                 )}
               </Box>
             </Box>

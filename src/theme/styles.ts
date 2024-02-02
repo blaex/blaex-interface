@@ -161,7 +161,7 @@ const ThemedGlobalStyle = createGlobalStyle`
     font-weight: bold;
     border: none;
     outline: none;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 16px;
     cursor: pointer;
     transition: all 240ms ease;

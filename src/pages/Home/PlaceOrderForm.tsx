@@ -55,7 +55,11 @@ function PriceTriggerOption({
             variant="ghost"
             key={option.value}
             onClick={() => onChangeOption(option)}
-            sx={{ fontSize: '16px', ...(isActive ? { color: 'neutral1' } : { color: 'neutral5' }) }}
+            sx={{
+              fontSize: '16px',
+              fontWeight: 'normal',
+              ...(isActive ? { color: 'neutral1' } : { color: 'neutral5' }),
+            }}
           >
             {option.label}
           </Button>
@@ -126,7 +130,7 @@ function LeverageInput({
 }) {
   return (
     <Flex mb={3} sx={{ alignItems: 'center', justifyContent: 'space-between', gap: 3 }}>
-      <Flex sx={{ alignItems: 'center' }}>
+      <Flex sx={{ alignItems: 'center', bg: 'background3', height: 40, px: 2 }}>
         <Type.Body sx={{ mr: '1ch' }}>
           <Trans>Leverage:</Trans>
         </Type.Body>
@@ -147,14 +151,18 @@ function LeverageInput({
           return (
             <Box
               key={option.toString()}
-              variant="tag"
               role="button"
               onClick={() => onChangeLeverage(option.toString())}
               sx={{
-                fontSize: 13,
-                lineHeight: '20px',
+                fontSize: 16,
+                lineHeight: '40px',
+                textAlign: 'center',
                 color: 'neutral4',
                 '&:hover': { color: 'neutral2' },
+                bg: 'background3',
+                width: 40,
+                height: 40,
+                borderRadius: 0,
               }}
             >
               {option}x
@@ -188,7 +196,11 @@ function SettingIcon() {
 function Summary({ amount, leverage }: { amount: number | undefined; leverage: number | undefined }) {
   return (
     <Box mb={3}>
-      <SummaryItem label={<Trans>Entry Price</Trans>} value={amount ? `$${formatNumber(amount)}` : '--'} />
+      <SummaryItem
+        label={<Trans>Entry Price</Trans>}
+        value={amount ? `$${formatNumber(amount)}` : '--'}
+        sx={{ mb: 2 }}
+      />
       <SummaryItem
         label={<Trans>Size</Trans>}
         value={amount && leverage ? `$${formatNumber(amount * leverage)}` : '--'}

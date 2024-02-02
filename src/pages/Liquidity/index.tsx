@@ -87,7 +87,19 @@ function Form() {
         <Flex sx={{ gap: 2 }}>
           <Box>
             <Type.Body mb={3}>Pay</Type.Body>
-            <NumberInput placeholder="0.0" value={amount} onValueChange={(e) => setAmount(e.target.value)} />
+            <NumberInput
+              placeholder="0.0"
+              value={amount}
+              onValueChange={(e) => setAmount(e.target.value)}
+              sx={{
+                '&:focus-within:not([disabled])': {
+                  bg: 'neutral7',
+                },
+                '&:hover:not([disabled]),&:focus:not([disabled])': {
+                  bg: 'neutral7',
+                },
+              }}
+            />
           </Box>
           {isBuy ? <USDBToken /> : <BLIToken />}
         </Flex>
