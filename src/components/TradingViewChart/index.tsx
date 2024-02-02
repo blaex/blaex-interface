@@ -45,7 +45,7 @@ function TradingViewChart() {
     }
   }, [])
 
-  return <div id="tv_chart_container" style={{ height: '60vh' }} />
+  return <div id="tv_chart_container" style={{ height: '100%' }} />
 }
 
 export default TradingViewChart
