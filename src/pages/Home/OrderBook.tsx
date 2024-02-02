@@ -6,7 +6,7 @@ import { formatNumber, formatRelativeShortDate } from 'utils/helpers/format'
 
 export default function OrderBook() {
   return (
-    <Box width={300}>
+    <Box width="100%" p={3}>
       <Flex sx={{ '& > *': { flexShrink: 0 } }}>
         <Type.Caption width="30%">
           <Trans>Time</Trans>
@@ -24,7 +24,7 @@ export default function OrderBook() {
         })
         .map((value, index) => {
           return (
-            <Flex key={index} sx={{ '& > *': { flexShrink: 0 } }}>
+            <Flex key={index} mb={10} sx={{ '& > *': { flexShrink: 0 } }}>
               <Type.Caption width="30%">{formatRelativeShortDate(value.time)}</Type.Caption>
               <Type.Caption width="35%" textAlign="right">
                 {formatNumber(value.size)}
