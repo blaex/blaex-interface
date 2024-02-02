@@ -1,14 +1,15 @@
-import { useResponsive } from 'ahooks'
-
+import Container from 'components/@ui/Container'
 import CustomPageTitle from 'components/@ui/CustomPageTitle'
-import { Box } from 'theme/base'
+
+import Chart from './Chart'
 
 export default function HomePage() {
-  const { md } = useResponsive()
   return (
     <>
       <CustomPageTitle title="Blaex" />
-      <Box>Home</Box>
+      <Container p={3}>
+        <Chart />
+      </Container>
     </>
   )
 }
