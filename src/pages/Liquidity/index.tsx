@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Web3Provider } from '@ethersproject/providers'
 import { formatEther, parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { ArrowsDownUp } from '@phosphor-icons/react'
@@ -6,22 +7,25 @@ import { ReactNode, useState } from 'react'
 
 import CustomPageTitle from 'components/@ui/CustomPageTitle'
 import Divider from 'components/@ui/Divider'
+import { useClickLoginButton } from 'components/LoginAction'
 import NumberInput from 'components/NumberInput'
 import { parseInputValue } from 'components/NumberInput/helpers'
 import useBalancesStore from 'hooks/store/useBalancesManagement'
-import { useAuthContext } from 'hooks/web3/useAuth'
 import { useLiquidityVaultContract } from 'hooks/web3/useContract'
 import useContractMutation from 'hooks/web3/useContractMutation'
 import useContractQuery from 'hooks/web3/useContractQuery'
+import useMulticallQuery from 'hooks/web3/useMulticallQuery'
 import useERC20Approval from 'hooks/web3/useTokenApproval'
+import useWeb3 from 'hooks/web3/useWeb3'
 import { Button } from 'theme/Buttons'
+import Loading from 'theme/Loading'
 import { Box, Flex, Image, Type } from 'theme/base'
 import { CONTRACT_KEYS } from 'utils/config/keys'
 import { generateClipPath } from 'utils/helpers/css'
 import { formatNumber } from 'utils/helpers/format'
 import { parseMarketImageSrc } from 'utils/helpers/transform'
 import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
-import { CONTRACT_ADDRESSES } from 'utils/web3/contracts'
+import { CONTRACT_ABIS, CONTRACT_ADDRESSES } from 'utils/web3/contracts'
 
 export default function LiquidityPage() {
   return (
@@ -45,6 +49,28 @@ export default function LiquidityPage() {
 }
 
 function Overview() {
+  const { publicProvider } = useWeb3()
+  const { data } = useMulticallQuery<BigNumber[][], any, number[]>(
+    CONTRACT_ABIS[CONTRACT_KEYS.LIQUIDITY_VAULT],
+    [
+      {
+        address: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.LIQUIDITY_VAULT],
+        name: 'totalSupply',
+        params: [],
+      },
+      {
+        address: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.LIQUIDITY_VAULT],
+        name: 'getTotalPooledToken',
+        params: [],
+      },
+    ],
+    DEFAULT_CHAIN_ID,
+    {
+      select: (data) => data.map((item) => Number(formatEther(item[0]))),
+    }
+  )
+  const totalSupply = data?.[0]
+  const totalToken = data?.[1]
   return (
     <Box sx={{ bg: 'background2', borderRadius: 'sm', p: 3 }}>
       <Flex sx={{ alignItems: 'center', gap: 3 }}>
@@ -57,9 +83,17 @@ function Overview() {
         </Box>
       </Flex>
       <Divider my={3} />
-      <Stats label={<Trans>Price</Trans>} value={`$${formatNumber(1.112)}`} />
+      <Stats
+        label={<Trans>Price</Trans>}
+        value={totalToken && totalSupply ? `$${formatNumber(totalToken / totalSupply, 2, 2)}` : '--'}
+      />
       <Box mb={2} />
-      <Stats label={<Trans>Total Supply</Trans>} value={`${formatNumber(123123123)}($${formatNumber(123123123)})`} />
+      <Stats
+        label={<Trans>Total Supply</Trans>}
+        value={`${totalSupply ? formatNumber(totalSupply, 2, 2) : '--'} ($${
+          totalToken ? formatNumber(totalToken, 2, 2) : '--'
+        })`}
+      />
       <Divider my={3} />
       <Stats label={<Trans>Protocol Yield APR</Trans>} value={`${formatNumber(12.33)}%`} />
       <Box mb={2} />
@@ -85,13 +119,17 @@ type TabOption = (typeof TABS)[0]
 const DEFAULT_TAB = TABS[0]
 
 function Form() {
-  const { account } = useAuthContext()
+  const { walletAccount, walletProvider, publicProvider } = useWeb3()
+  const login = useClickLoginButton()
   const [currentTab, setTab] = useState(DEFAULT_TAB)
   const [amount, setAmount] = useState<string | undefined>(undefined)
   const amountIn = parseInputValue(amount)
   const isBuy = currentTab.value === DEFAULT_TAB.value
-  const LiquidityVaultContract = useLiquidityVaultContract(true)
-  const { data: amountOut } = useContractQuery<BigNumber>(
+  const LiquidityVaultContract = useLiquidityVaultContract({
+    provider: walletProvider ?? (publicProvider as Web3Provider),
+    withSignerIfPossible: true,
+  })
+  const { data: amountOut, isLoading: loadingAmountOut } = useContractQuery<BigNumber>(
     LiquidityVaultContract,
     isBuy ? 'getSharesByPooledToken' : 'getPooledTokenByShares',
     [parseEther(amountIn.toString())],
@@ -101,7 +139,7 @@ function Form() {
   )
   const { isTokenAllowanceEnough, approving, approveToken } = useERC20Approval({
     token: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
-    account: account?.address,
+    account: walletAccount?.address,
     spender: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.LIQUIDITY_VAULT],
   })
 
@@ -138,34 +176,55 @@ function Form() {
         <Flex sx={{ gap: 2 }}>
           <Box flex="1">
             <Type.Body mb={3}>Receive</Type.Body>
-            <Type.H3 color="neutral1" sx={{ fontWeight: 'normal' }}>
-              {amountOut == null
-                ? '--'
-                : !amountOut.isZero()
-                ? formatNumber(formatEther(amountOut))
-                : formatNumber(amountIn)}
+            <Type.H3 color="neutral1" sx={{ fontWeight: 'normal', textAlign: 'left' }}>
+              {loadingAmountOut ? (
+                <Box width={24}>
+                  <Loading size={20} />
+                </Box>
+              ) : amountOut == null ? (
+                '--'
+              ) : !amountOut.isZero() ? (
+                formatNumber(formatEther(amountOut))
+              ) : (
+                formatNumber(amountIn)
+              )}
             </Type.H3>
           </Box>
           {isBuy ? <BLIToken /> : <USDBToken />}
         </Flex>
       </Box>
-      <SubmitButton
-        isLoading={approving || submitting}
-        disabled={approving || submitting}
-        text={<>{isBuy ? approvedEnough ? <Trans>Buy</Trans> : <Trans>Approve</Trans> : <Trans>Sell</Trans>}</>}
-        onSubmit={() => {
-          if (approvedEnough) {
-            mutate(
-              { method: isBuy ? 'deposit' : 'withdraw', params: [parseEther(amountIn.toString())] },
-              {
-                onSuccess: () => setAmount(undefined),
-              }
-            )
-            return
-          }
-          approveToken(amountIn)
-        }}
-      />
+      {walletAccount ? (
+        <SubmitButton
+          isLoading={approving || submitting}
+          disabled={approving || submitting}
+          text={<>{isBuy ? approvedEnough ? <Trans>Buy</Trans> : <Trans>Approve</Trans> : <Trans>Sell</Trans>}</>}
+          onSubmit={() => {
+            if (approvedEnough) {
+              mutate(
+                { method: isBuy ? 'deposit' : 'withdraw', params: [parseEther(amountIn.toString())] },
+                {
+                  onSuccess: () => setAmount(undefined),
+                }
+              )
+              return
+            }
+            approveToken(amountIn)
+          }}
+        />
+      ) : (
+        <Button
+          variant="primary"
+          sx={{
+            width: '100%',
+            height: 50,
+            border: 'none',
+            borderRadius: 0,
+          }}
+          onClick={() => login()}
+        >
+          <Trans>Connect Wallet</Trans>
+        </Button>
+      )}
     </Box>
   )
 }

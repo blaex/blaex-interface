@@ -57,12 +57,19 @@ export function useERC20Contract(erc20Address: string, withSignerIfPossible?: bo
   })
 }
 
-export function useLiquidityVaultContract(withSignerIfPossible?: boolean) {
+export function useLiquidityVaultContract({
+  provider,
+  withSignerIfPossible,
+}: {
+  provider?: Web3Provider
+  withSignerIfPossible?: boolean
+}) {
   return useContract({
     contract: {
       address: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.LIQUIDITY_VAULT],
       abi: CONTRACT_ABIS[CONTRACT_KEYS.LIQUIDITY_VAULT],
     },
     withSignerIfPossible,
+    provider,
   })
 }

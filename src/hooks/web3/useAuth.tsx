@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { getStoredWallet, storeAuth } from 'apis/helpers'
+import { clearAuth, getStoredWallet, storeAuth } from 'apis/helpers'
 import ToastBody from 'components/@ui/ToastBody'
 import WaitingWallet, { WaitingState } from 'components/AuthWaitingWallet'
 import { BLAST_TESTNET } from 'utils/web3/chains'
@@ -42,6 +42,7 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
   const disconnect = useCallback(() => {
     setWaitingState(null)
     setIsAuthenticated(false)
+    clearAuth()
     if (!wallet) return
     deactivate({
       label: wallet.label,
