@@ -37,7 +37,7 @@ export default function LiquidityPage() {
           <Trans>Liquidity</Trans>
         </Type.H1>
         <Type.Body color="neutral5" mb={24}>
-          <Trans>Purchase BLI tokens to earn ETH fees from swaps and leverage trading.</Trans>
+          <Trans>Purchase BLI tokens to earn USDB from trading fees.</Trans>
         </Type.Body>
         <Flex sx={{ width: '100%', gap: 2, '& > *': { flex: 1 }, alignItems: 'start' }}>
           <Overview />
