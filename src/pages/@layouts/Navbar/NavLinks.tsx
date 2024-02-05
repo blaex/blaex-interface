@@ -41,11 +41,11 @@ const configs: { route: string; label: ReactNode; matchpath: string }[] = [
     label: <Trans>Perpetual</Trans>,
     matchpath: ROUTES.PERPETUAL.path,
   },
-  {
-    route: ROUTES.SWAP.path,
-    label: <Trans>Swap</Trans>,
-    matchpath: ROUTES.SWAP.path,
-  },
+  // {
+  //   route: ROUTES.SWAP.path,
+  //   label: <Trans>Swap</Trans>,
+  //   matchpath: ROUTES.SWAP.path,
+  // },
   {
     route: ROUTES.LIQUIDITY.path,
     label: <Trans>Liquidity</Trans>,

@@ -33,7 +33,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: { error: any; resetErrorBo
           <Trans>Reload</Trans>
         </ButtonWithIcon>
         <Link to="/">
-          <ButtonWithIcon icon={<House size={20} />} width={175} variant="outline" block onClick={resetErrorBoundary}>
+          <ButtonWithIcon icon={<House size={20} />} width={175} block onClick={resetErrorBoundary}>
             <Trans>Back To Home</Trans>
           </ButtonWithIcon>
         </Link>

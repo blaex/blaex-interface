@@ -1,5 +1,4 @@
 import { CSSObject, DefaultTheme, ThemedCssFunction, css } from 'styled-components/macro'
-import { borderRadius } from 'styled-system'
 
 import colors from 'theme/colors'
 import { Colors } from 'theme/types'
@@ -68,21 +67,21 @@ function theme(darkMode: boolean): DefaultTheme {
       sm: '4px',
       md: '12px',
       lg: '16px',
-      button: '4px',
+      button: '0',
     },
     borderTopLeftRadius: {
       xs: '2px',
       sm: '4px',
       md: '12px',
       lg: '16px',
-      button: '4px',
+      button: '0',
     },
     borderTopRightRadius: {
       xs: '2px',
       sm: '4px',
       md: '12px',
       lg: '16px',
-      button: '4px',
+      button: '0',
     },
     borders: {
       small: '1px solid',
@@ -93,7 +92,7 @@ function theme(darkMode: boolean): DefaultTheme {
     variants: {
       card: {
         bg: 'background3',
-        borderRadius: '8px',
+        // borderRadius: '0',
       },
       cardPolygon: {
         p: 3,

@@ -57,8 +57,9 @@ const NavUser = () => {
             px: 3,
           }}
           buttonSx={{
-            border: 'none',
-            p: 0,
+            py: 0,
+            pl: 0,
+            pr: 1,
           }}
           placement="bottomRight"
         >
@@ -85,7 +86,7 @@ const NavUser = () => {
             </Flex>
 
             <Flex mt={4} justifyContent="space-between">
-              <Button variant="outline" px={4} width="49%" type="button" onClick={() => setIsShowModalLogout(false)}>
+              <Button px={4} width="49%" type="button" onClick={() => setIsShowModalLogout(false)}>
                 <Trans>Back</Trans>
               </Button>
               <Button type="button" variant="primary" px={4} width="49%" onClick={logout}>

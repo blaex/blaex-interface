@@ -111,7 +111,7 @@ const WaitingWallet = ({
                   </Button>
                 )}
 
-                <Button type="button" width={150} variant="outline" onClick={disconnect}>
+                <Button type="button" width={150} onClick={disconnect}>
                   {waitingState === WaitingState.Connecting ? <Trans>Cancel</Trans> : <Trans>Disconnect</Trans>}
                 </Button>
               </Flex>

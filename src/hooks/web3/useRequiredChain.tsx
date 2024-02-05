@@ -1,10 +1,8 @@
-import { Trans } from '@lingui/macro'
 import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 
 import switchChain from 'assets/images/switch-chain.png'
 import useGlobalDialog from 'hooks/store/useGlobalDialog'
 import useChain from 'hooks/web3/useChain'
-import Alert from 'theme/Alert'
 import { Button } from 'theme/Buttons'
 import { Box, Flex, Image, Type } from 'theme/base'
 import { DEFAULT_CHAIN_ID, getChainMetadata } from 'utils/web3/chains'
@@ -24,7 +22,7 @@ const useRequiredChain = ({
   const [alert, setAlert] = useState<ReactNode>()
   const { dialog, showDialog, hideDialog } = useGlobalDialog()
   const requiredChain = getChainMetadata(chainId)
-  const title = `This feature only supports on ${requiredChain.label}`
+  const title = `Please switch to ${requiredChain.label}`
 
   const renderComponent = useCallback(() => {
     return (
@@ -74,7 +72,6 @@ const useRequiredChain = ({
             body: (
               <Flex sx={{ gap: 2 }} justifyContent="center" mt={3}>
                 <Button
-                  variant="outline"
                   onClick={() => {
                     hideDialog()
                     onDismiss && onDismiss()

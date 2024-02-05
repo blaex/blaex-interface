@@ -6,7 +6,7 @@ const ThemedGlobalStyle = createGlobalStyle`
   html, body, #root { height: 100% }
   html {
     font-family: ${FONT_FAMILY};
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
     color: ${({ theme }) => theme.colors.neutral1};
     background-color: ${({ theme }) => theme.colors.background1};
@@ -117,7 +117,7 @@ const ThemedGlobalStyle = createGlobalStyle`
   }
   input,
   textarea {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
     color: inherit;
     font-family: ${FONT_FAMILY};
@@ -158,7 +158,7 @@ const ThemedGlobalStyle = createGlobalStyle`
   }
   button {
     font-family: ${FONT_FAMILY};
-    font-weight: bold;
+    font-weight: 400;
     border: none;
     outline: none;
     font-size: 14px;

@@ -3,6 +3,7 @@ import { memo } from 'react'
 import create from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
+import Num from 'entities/Num'
 import { useAuthContext } from 'hooks/web3/useAuth'
 import { useERC20Contract } from 'hooks/web3/useContract'
 import useContractQuery from 'hooks/web3/useContractQuery'
@@ -11,9 +12,9 @@ import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
 import { CONTRACT_ADDRESSES } from 'utils/web3/contracts'
 
 interface BalancesState {
-  balances: { [key: string]: BigNumber | null }
-  setBalance: (balance: { [key: string]: BigNumber | null }) => void
-  setBalances: (balance: { [key: string]: BigNumber | null }) => void
+  balances: { [key: string]: Num | null }
+  setBalance: (balance: { [key: string]: Num | null }) => void
+  setBalances: (balance: { [key: string]: Num | null }) => void
 }
 
 const useBalancesStore = create<BalancesState>()(
@@ -39,13 +40,13 @@ export const InitBalancesStore = memo(function InitBlastBalanceStore() {
   useContractQuery<BigNumber>(USDBContract, 'balanceOf', [account?.address], {
     refetchInterval: 5000,
     onSuccess(data) {
-      setBalance({ USDB: data })
+      setBalance({ USDB: new Num(data) })
     },
   })
   useContractQuery<BigNumber>(BLIContract, 'balanceOf', [account?.address], {
     refetchInterval: 5000,
     onSuccess(data) {
-      setBalance({ BLI: data })
+      setBalance({ BLI: new Num(data) })
     },
   })
   return null

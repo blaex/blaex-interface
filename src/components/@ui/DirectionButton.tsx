@@ -59,7 +59,6 @@ function DirectionButton({
   return (
     <IconButton
       icon={<Icon size={16} />}
-      variant="outline"
       onClick={onClick}
       sx={{
         position: 'absolute',

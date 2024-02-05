@@ -73,3 +73,20 @@ export function useLiquidityVaultContract({
     provider,
   })
 }
+
+export function usePerpsMarketContract({
+  provider,
+  withSignerIfPossible,
+}: {
+  provider?: Web3Provider
+  withSignerIfPossible?: boolean
+}) {
+  return useContract({
+    contract: {
+      address: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.PERPS_MARKET],
+      abi: CONTRACT_ABIS[CONTRACT_KEYS.PERPS_MARKET],
+    },
+    withSignerIfPossible,
+    provider,
+  })
+}

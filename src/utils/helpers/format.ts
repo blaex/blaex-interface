@@ -29,7 +29,7 @@ export const formatLocalRelativeShortDate = (date: string | number) => {
 export const formatRelativeDate = (date: string | number) => dayjs.utc(date).fromNow()
 export const formatRelativeShortDate = (date: string | number) => {
   const arr = dayjs.utc(date).fromNow(true).split(' ')
-  return `${arr[0]}${arr[1]?.charAt(0)}`
+  return `${arr[0] === 'a' || arr[0] === 'an' ? 1 : arr[0]}${arr[1]?.charAt(0)}`
 }
 
 export const formatLocalDate = (date: string | number | undefined, format?: string) => {

@@ -1,6 +1,7 @@
 import { useResponsive } from 'ahooks'
 
 import CustomPageTitle from 'components/@ui/CustomPageTitle'
+import useRequiredChain from 'hooks/web3/useRequiredChain'
 import { Box, Flex } from 'theme/base'
 
 import OrderBook from './OrderBook'
@@ -8,6 +9,7 @@ import PlaceOrderForm from './PlaceOrderForm'
 import PositionManagement from './PositionManagement'
 
 export default function HomePage() {
+  const { isValid, alert } = useRequiredChain()
   const { xl } = useResponsive()
   if (!xl)
     return (
@@ -37,9 +39,7 @@ export default function HomePage() {
             </Box>
           </Box>
 
-          <Box sx={{ width: 400, flexShrink: 0 }}>
-            <PlaceOrderForm />
-          </Box>
+          <Box sx={{ width: 400, flexShrink: 0 }}>{isValid ? <PlaceOrderForm /> : alert}</Box>
         </Flex>
       </Box>
     </>

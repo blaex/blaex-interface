@@ -1,12 +1,23 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
+import { Web3Provider } from '@ethersproject/providers'
+import { formatEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { ReactNode, useState } from 'react'
 
 import { DifferentialBar } from 'components/@ui/DifferentialBar'
 import NumberInput from 'components/NumberInput'
 import { parseInputValue } from 'components/NumberInput/helpers'
+import Num from 'entities/Num'
+import useBalancesStore from 'hooks/store/useBalancesManagement'
+import { usePerpsMarketContract } from 'hooks/web3/useContract'
+import useContractQuery from 'hooks/web3/useContractQuery'
+import useWeb3 from 'hooks/web3/useWeb3'
 import { Button } from 'theme/Buttons'
 import { Box, Flex, Type } from 'theme/base'
 import { formatNumber } from 'utils/helpers/format'
+
+const MAX_SIZE_USD = 10000
 
 const PRICE_TRIGGER_OPTIONS = [
   { label: <Trans>Market</Trans>, value: 'market' },
@@ -27,14 +38,22 @@ export default function PlaceOrderForm() {
   const onChangeLeverage = (_leverage: string | undefined) => setLeverage(_leverage)
   const pLeverage = parseInputValue(leverage)
 
+  const { walletAccount, walletProvider, publicProvider } = useWeb3()
+  const PerpsMarketContract = usePerpsMarketContract({ provider: walletProvider ?? (publicProvider as Web3Provider) })
+
+  const { data: price } = useContractQuery<BigNumber, any, Num>(PerpsMarketContract, 'indexPrice', [1], {
+    select: (data: BigNumber) => new Num(data),
+    refetchInterval: 3000,
+  })
+
   return (
     <Box maxWidth={400} sx={{ p: 3, border: 'sm', bg: 'background2' }}>
       <PriceTriggerOption currentOption={priceTriggerOption} onChangeOption={onChangePriceTriggerOption} />
-      <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
+      <AmountInput amount={amount} leverage={pLeverage} onChangeAmount={onChangeAmount} />
       <LeverageInput leverage={leverage} onChangeLeverage={onChangeLeverage} />
-      <Summary amount={pAmount} leverage={pLeverage} />
+      <Summary amount={pAmount} leverage={pLeverage} price={price} />
       <Buttons amount={pAmount} leverage={pLeverage} />
-      <MarketStats />
+      <MarketStats contract={PerpsMarketContract} price={price} leverage={pLeverage} />
     </Box>
   )
 }
@@ -55,9 +74,13 @@ function PriceTriggerOption({
             variant="ghost"
             key={option.value}
             onClick={() => onChangeOption(option)}
+            disabled={option.value !== 'market'}
             sx={{
               fontSize: '16px',
               fontWeight: 'normal',
+              '&[disabled]': {
+                background: 'transparent!important',
+              },
               ...(isActive ? { color: 'neutral1' } : { color: 'neutral5' }),
             }}
           >
@@ -72,12 +95,15 @@ function PriceTriggerOption({
 const QUICK_SET_AMOUNT_OPTIONS = [10, 25, 50, 75, 100]
 function AmountInput({
   amount,
+  leverage,
   onChangeAmount,
 }: {
   amount: string | undefined
+  leverage: number
   onChangeAmount: (amount: string | undefined) => void
 }) {
-  const balance = 1000
+  const { balances } = useBalancesStore()
+  const balance = balances.USDB ? balances.USDB.num : 0
   return (
     <Box mb={3} variant="cardPolygon" sx={{ bg: 'neutral6' }}>
       <Flex mb={3} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
@@ -91,7 +117,7 @@ function AmountInput({
                 key={option.toString()}
                 variant="tag"
                 role="button"
-                onClick={() => onChangeAmount(((balance * option) / 100).toString())}
+                onClick={() => onChangeAmount(Math.min((balance * option) / 100, MAX_SIZE_USD / leverage).toString())}
                 sx={{
                   fontSize: 13,
                   lineHeight: '20px',
@@ -193,25 +219,33 @@ function SettingIcon() {
   )
 }
 
-function Summary({ amount, leverage }: { amount: number | undefined; leverage: number | undefined }) {
+function Summary({
+  amount,
+  leverage,
+  price,
+}: {
+  amount: number | undefined
+  leverage: number | undefined
+  price?: Num
+}) {
+  // TODO: get procotol fee & keeper fee from onchain data
+  const sizeInUsd = amount && leverage ? amount * leverage : undefined
+  const size = sizeInUsd && price ? sizeInUsd / price.num : undefined
   return (
     <Box mb={3}>
       <SummaryItem
         label={<Trans>Entry Price</Trans>}
-        value={amount ? `$${formatNumber(amount)}` : '--'}
+        value={price ? `$${formatNumber(price.num)}` : '--'}
         sx={{ mb: 2 }}
       />
+      <SummaryItem label={<Trans>Size</Trans>} value={sizeInUsd ? `$${formatNumber(sizeInUsd)}` : '--'} />
+      <SummaryItem label={''} value={size ? `~$${formatNumber(size)}` : '--'} />
+      <Box height={8}></Box>
       <SummaryItem
-        label={<Trans>Size</Trans>}
-        value={amount && leverage ? `$${formatNumber(amount * leverage)}` : '--'}
+        label={<Trans>Order Fees</Trans>}
+        value={sizeInUsd ? `$${formatNumber((sizeInUsd * 0.05) / 100, 2, 2)}` : '--'}
       />
-      <SummaryItem label={''} value={`~$${formatNumber(amount)}`} />
-      <Flex sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
-        <Type.Caption color="neutral4">
-          <Trans>Fee</Trans>
-        </Type.Caption>
-        <Type.Caption>{1123}</Type.Caption>
-      </Flex>
+      <SummaryItem label={<Trans>Keeper Fees</Trans>} value={'$1.00'} />
     </Box>
   )
 }
@@ -237,7 +271,20 @@ function Buttons({ amount, leverage }: { amount: number | undefined; leverage: n
   )
 }
 
-function MarketStats() {
+type MarketData = {
+  longRate: number
+  fundingRate: number
+}
+
+function MarketStats({ contract, price, leverage }: { contract: Contract; price?: Num; leverage: number }) {
+  const { data: market } = useContractQuery<BigNumber[], any, MarketData>(contract, 'getMarket', [1], {
+    select: (data: BigNumber[]) => ({
+      longRate: data[2].isZero() ? 50 : 50 + Number(formatEther(data[3].div(data[2]))),
+      fundingRate: Number(formatEther(data[4])),
+    }),
+    refetchInterval: 10000,
+  })
+  const diff = 90 / leverage
   return (
     <Box>
       <Flex sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
@@ -246,37 +293,41 @@ function MarketStats() {
         </Type.Caption>
         <Type.Caption>
           <Box as="span" color="system2">
-            {formatNumber(32.4)}%
+            {market ? `${formatNumber(market.longRate, 1)}%` : '--'}
           </Box>
           {' / '}
           <Box as="span" color="system1">
-            {formatNumber(33.8)}%
+            {market ? `${formatNumber(100 - market.longRate, 1)}%` : '--'}
           </Box>
         </Type.Caption>
       </Flex>
-      <DifferentialBar sourceRate={52.23} targetRate={47.77} />
+      {!!market && <DifferentialBar sourceRate={market.longRate} targetRate={100 - market.longRate} />}
       <Box mb={3} />
       <MarketStatWrapper>
         <Type.Caption color="neutral4">
           <Trans>Max</Trans>
         </Type.Caption>
-        <Type.Caption>${formatNumber(123123)}</Type.Caption>
-        <Type.Caption textAlign="right">${formatNumber(123123)}</Type.Caption>
+        <Type.Caption>${formatNumber(MAX_SIZE_USD, 2, 2)}</Type.Caption>
+        <Type.Caption textAlign="right">${formatNumber(MAX_SIZE_USD, 2, 2)}</Type.Caption>
       </MarketStatWrapper>
       <MarketStatWrapper>
         <Type.Caption color="neutral4">
           <Trans>Est. Liq. Price</Trans>
         </Type.Caption>
-        <Type.Caption>${formatNumber(123123)}</Type.Caption>
-        <Type.Caption textAlign="right">${formatNumber(123123)}</Type.Caption>
+        <Type.Caption>{price ? `$${formatNumber((price.num * (100 + diff)) / 100, 2, 2)}` : '--'}</Type.Caption>
+        <Type.Caption textAlign="right">
+          {price ? `$${formatNumber((price.num * (100 - diff)) / 100, 2, 2)}` : '--'}
+        </Type.Caption>
       </MarketStatWrapper>
       <MarketStatWrapper>
         <Type.Caption color="neutral4">
           <Trans>Funding</Trans>
         </Type.Caption>
-        <Type.Caption color="system2">${formatNumber(123123)}</Type.Caption>
+        <Type.Caption color="system2">
+          {market ? `${formatNumber(market.fundingRate * 100, 5, 5)}%` : '--'}
+        </Type.Caption>
         <Type.Caption textAlign="right" color="system1">
-          ${formatNumber(123123)}
+          {market ? `${formatNumber(market.fundingRate * -100, 5, 5)}%` : '--'}
         </Type.Caption>
       </MarketStatWrapper>
     </Box>

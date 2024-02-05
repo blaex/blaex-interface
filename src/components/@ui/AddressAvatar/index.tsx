@@ -23,7 +23,6 @@ const AddressAvatar = ({ address, size = 48 }: { address: string; size?: number 
       height={size}
       fontSize={size * 0.65}
       sx={{
-        borderRadius: size / 2,
         overflow: 'hidden',
         background: gradient,
         flexShrink: 0,

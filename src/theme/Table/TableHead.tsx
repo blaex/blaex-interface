@@ -81,14 +81,14 @@ export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSou
                   handleChangeSort(column?.sortBy, column?.sortType)
                 }}
                 sx={{
-                  color: column?.sortBy && isCurrentSort ? 'neutral1' : 'neutral4',
+                  color: column?.sortBy && isCurrentSort ? 'neutral1' : 'neutral5',
                   '&:hover': {
-                    color: column?.sortBy ? 'neutral2' : 'neutral4',
+                    color: column?.sortBy ? 'neutral2' : 'neutral5',
                   },
                 }}
               >
                 {column.sortBy && changeCurrentSort ? (
-                  <Type.Caption fontWeight={isCurrentSort ? 'bold' : 'normal'} sx={{ width: '100%' }}>
+                  <Type.Small fontWeight={isCurrentSort ? 'bold' : 'normal'} sx={{ width: '100%' }}>
                     <Flex alignItems="center" as="span" sx={{ justifyContent: column.style?.textAlign }}>
                       {column.title}
                       {isCurrentSort ? (
@@ -101,9 +101,9 @@ export default function TableHead<T = ColumnDataParameter, K = ColumnExternalSou
                         <SortDefaultIcon />
                       )}
                     </Flex>
-                  </Type.Caption>
+                  </Type.Small>
                 ) : (
-                  <Type.Caption sx={{ width: '100%' }}>{column.title}</Type.Caption>
+                  <Type.Small sx={{ width: '100%' }}>{column.title}</Type.Small>
                 )}
               </Box>
             </Box>

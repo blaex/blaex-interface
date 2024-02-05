@@ -9,6 +9,7 @@ import { Provider, Web3Provider } from '@ethersproject/providers'
 import ERC20_ABI from 'abis/ERC20.json'
 import LIQUIDITY_VAULT_ABI from 'abis/LiquidityVault.json'
 import MULTICALL_ABI from 'abis/Multicall.json'
+import PERPS_MARKET_ABI from 'abis/PerpsMarket.json'
 import USDB_ABI from 'abis/USDB.json'
 import { CONTRACT_KEYS } from 'utils/config/keys'
 import { ContractInfo } from 'utils/web3/types'
@@ -27,6 +28,7 @@ export const CONTRACT_ABIS: {
   [CONTRACT_KEYS.USDB]: USDB_ABI,
   [CONTRACT_KEYS.ERC20]: ERC20_ABI,
   [CONTRACT_KEYS.LIQUIDITY_VAULT]: LIQUIDITY_VAULT_ABI,
+  [CONTRACT_KEYS.PERPS_MARKET]: PERPS_MARKET_ABI,
 }
 
 export const CONTRACT_ADDRESSES: {
@@ -44,7 +46,7 @@ export const CONTRACT_ADDRESSES: {
     [CONTRACT_KEYS.LIQUIDITY_VAULT]: '0x71615EC231bD8A6A05c2b8a964add7dd9d6ab294',
     [CONTRACT_KEYS.PERPS_VAULT]: '0x60f25244613b784661D9E1BaC930C3B58F533b0E',
     [CONTRACT_KEYS.USDB]: '0x4200000000000000000000000000000000000022',
-    [CONTRACT_KEYS.PERPS_MARKET]: '',
+    [CONTRACT_KEYS.PERPS_MARKET]: '0xD3F4aB2AA30a4B9254476b8e35536f218D2C10cA',
   },
 }
 

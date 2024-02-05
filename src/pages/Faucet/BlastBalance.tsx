@@ -1,4 +1,3 @@
-import { formatEther } from '@ethersproject/units'
 import { CoinVertical } from '@phosphor-icons/react'
 
 import useBalancesStore from 'hooks/store/useBalancesManagement'
@@ -23,7 +22,7 @@ const BlastBalance = () => {
       <Type.BodyBold>
         Your Blast L2 balance:{' '}
         <Box as="span" color="primary1">
-          {USDB ? formatNumber(formatEther(USDB)) : '--'} USDB
+          {USDB ? formatNumber(USDB.num) : '--'} USDB
         </Box>
       </Type.BodyBold>
     </Flex>

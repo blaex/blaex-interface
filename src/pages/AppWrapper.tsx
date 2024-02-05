@@ -40,13 +40,7 @@ const AppWrapper = ({ children }: { children: ReactNode }) => {
             zIndex: 10000,
           }}
         >
-          <Box
-            variant="card"
-            width="fit-content"
-            height="fit-content"
-            textAlign="center"
-            sx={{ border: 'normal', borderColor: 'neutral6' }}
-          >
+          <Box variant="card" width="fit-content" height="fit-content" textAlign="center">
             {dialog.hasLoading && <Loading />}
             <Type.BodyBold display="block">{dialog.title}</Type.BodyBold>
             {!!dialog.description && <Type.Caption color="neutral3">{dialog.description}</Type.Caption>}

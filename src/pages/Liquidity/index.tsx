@@ -49,7 +49,6 @@ export default function LiquidityPage() {
 }
 
 function Overview() {
-  const { publicProvider } = useWeb3()
   const { data } = useMulticallQuery<BigNumber[][], any, number[]>(
     CONTRACT_ABIS[CONTRACT_KEYS.LIQUIDITY_VAULT],
     [
@@ -261,7 +260,7 @@ function USDBToken() {
   const { USDB } = useBalancesStore((state) => state.balances)
   return (
     <Flex sx={{ flexShrink: 0, flexDirection: 'column', alignItems: 'end' }}>
-      <Type.Body mb={3}>Balance: {USDB ? formatNumber(formatEther(USDB)) + ' USDB' : '--'}</Type.Body>
+      <Type.Body mb={3}>Balance: {USDB ? formatNumber(USDB.num) + ' USDB' : '--'}</Type.Body>
       <Flex sx={{ gap: 2, height: 40, alignItems: 'center' }}>
         <TokenWrapper symbol="USDB" />
       </Flex>
@@ -272,7 +271,7 @@ function BLIToken() {
   const { BLI } = useBalancesStore((state) => state.balances)
   return (
     <Flex sx={{ flexShrink: 0, flexDirection: 'column', alignItems: 'end' }}>
-      <Type.Body mb={3}>Balance: {BLI ? formatNumber(formatEther(BLI)) + ' BLI' : '--'}</Type.Body>
+      <Type.Body mb={3}>Balance: {BLI ? formatNumber(BLI.num) + ' BLI' : '--'}</Type.Body>
       <Flex sx={{ gap: 2, height: 40, alignItems: 'center' }}>
         <TokenWrapper symbol="BLI" />
       </Flex>

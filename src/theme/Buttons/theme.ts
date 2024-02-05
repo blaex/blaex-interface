@@ -8,6 +8,7 @@ export const styleVariants = {
     color: 'primary1',
     fontSize: '16px',
     bg: 'neutral7',
+    borderColor: 'transparent',
     clipPath: generateClipPath({ diffX: 16, diffY: 8 }),
     transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
@@ -53,8 +54,11 @@ export const styleVariants = {
   [variants.WHITE]: {
     color: 'neutral7',
     bg: 'neutral1',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
       bg: 'neutral2',
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
     },
   },
   [variants.INFO]: {
@@ -62,28 +66,40 @@ export const styleVariants = {
     bg: 'neutral5',
     border: 'small',
     borderColor: 'neutral4',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
       bg: 'neutral4',
     },
   },
   [variants.WARNING]: {
     color: 'white',
     bg: 'warning1',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
       bg: 'warning2',
     },
   },
   [variants.SUCCESS]: {
     color: 'white',
     bg: 'success1',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
       bg: 'success2',
     },
   },
   [variants.DANGER]: {
     color: 'white',
     bg: 'red2',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
       bg: 'danger2',
     },
   },
@@ -92,7 +108,10 @@ export const styleVariants = {
     bg: 'transparent',
     border: 'small',
     borderColor: 'neutral3',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
       borderColor: 'neutral1',
     },
   },
@@ -102,7 +121,12 @@ export const styleVariants = {
     bg: 'transparent',
     border: 'small',
     borderColor: 'neutral3',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
+
     '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
+
       borderColor: 'red2',
       color: 'red2',
     },
@@ -112,7 +136,10 @@ export const styleVariants = {
     bg: 'transparent',
     border: 'small',
     borderColor: 'primary1',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
       borderColor: 'primary2',
       color: 'primary2',
     },
@@ -122,7 +149,10 @@ export const styleVariants = {
     bg: 'transparent',
     border: 'small',
     borderColor: 'neutral3',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
       borderColor: 'neutral2',
       color: 'neutral1',
     },
@@ -132,7 +162,10 @@ export const styleVariants = {
     bg: 'transparent',
     border: 'small',
     borderColor: 'neutral4',
+    clipPath: generateClipPath({ diffX: 24, diffY: 12 }),
+    transition: '0.3s',
     '&:hover:not(:disabled),&:active:not(:disabled)': {
+      clipPath: generateClipPath({ diffX: 32, diffY: 16 }),
       borderColor: 'neutral3',
       color: 'neutral2',
     },
