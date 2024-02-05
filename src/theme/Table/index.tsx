@@ -232,7 +232,7 @@ export function TableContainer({
           pl: 2,
         },
         '& tbody td': { py: 12, verticalAlign: 'middle' },
-        '& th': { py: 12, borderBottom: 'small', borderColor: 'stroke' },
+        '& th': { py: 2, borderBottom: 'small', borderColor: 'stroke' },
         ...sx,
       }}
     >

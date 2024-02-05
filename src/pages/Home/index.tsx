@@ -26,7 +26,7 @@ export default function HomePage() {
         </Box>
         <Flex sx={{ width: '100%', gap: 2, overflow: 'hidden', height: 'calc(100% - 80px)' }}>
           <Box flex="1" sx={{ height: '100%' }}>
-            <Flex sx={{ gap: 2, height: '60%' }}>
+            <Flex sx={{ gap: 2, height: '65%' }}>
               <Box flex="1" sx={{ bg: 'background2' }}>
                 Chart
               </Box>
@@ -34,7 +34,7 @@ export default function HomePage() {
                 <OrderBook />
               </Box>
             </Flex>
-            <Box sx={{ height: '40%', flexShrink: 0, pb: 2 }}>
+            <Box sx={{ height: '35%', flexShrink: 0, pb: 2 }}>
               <PositionManagement />
             </Box>
           </Box>

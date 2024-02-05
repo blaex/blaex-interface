@@ -19,7 +19,7 @@ export default function PositionManagement() {
   const [currentTab, setTab] = useState(DEFAULT_TAB)
   return (
     <Flex sx={{ flexDirection: 'column', width: '100%', height: '100%' }}>
-      <Box sx={{ height: 56, position: 'relative' }}>
+      <Box sx={{ height: 48, position: 'relative' }}>
         <Tabs currentTab={currentTab} onChangeTab={(_option) => setTab(_option)} />
       </Box>
 
@@ -43,7 +43,6 @@ function Tabs({ currentTab, onChangeTab }: { currentTab: TabOption; onChangeTab:
             sx={{
               height: '100%',
               borderRadius: 0,
-              fontSize: '16px',
               fontWeight: 'normal',
               ...(isActive
                 ? { color: 'neutral1', borderBottom: 'small', borderBottomColor: 'neutral1' }
