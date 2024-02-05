@@ -25,11 +25,12 @@ function TradingViewChart() {
         debug: false,
         enabled_features: ['show_exchange_logos'],
         theme: 'Dark',
+        custom_css_url: '/tradingview-chart.css',
         overrides: {
-          'paneProperties.background': '#110F23',
+          'paneProperties.background': themeColors.background2,
+          'paneProperties.backgroundType': 'solid',
         },
         autosize: true,
-        height: 300,
       })
       widget.onChartReady(() => {
         const chart = widget.chart()
