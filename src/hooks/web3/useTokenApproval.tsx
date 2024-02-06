@@ -18,6 +18,7 @@ const useERC20Approval = ({ token, account, spender }: { token: string; account?
       enabled: !!account && !!spender,
     }
   )
+
   const { data: decimals } = useContractQuery<number>(tokenContract, 'decimals', [])
 
   const tokenMutation = useContractMutation(tokenContract)
@@ -28,7 +29,7 @@ const useERC20Approval = ({ token, account, spender }: { token: string; account?
       if (!decimals) return false
       return allowance.gte(parseUnits(amount.toString(), decimals))
     },
-    [allowance]
+    [allowance, decimals]
   )
 
   const approveToken = useCallback(

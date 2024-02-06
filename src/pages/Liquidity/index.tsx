@@ -96,7 +96,7 @@ function Overview() {
       <Divider my={3} />
       <Stats label={<Trans>Protocol Yield APR</Trans>} value={`${formatNumber(12.33)}%`} />
       <Box mb={2} />
-      <Stats label={<Trans>Blast Native Yield APR</Trans>} value={`${formatNumber(12.33)}%`} />
+      <Stats label={<Trans>Blast Native Yield APR</Trans>} value={`${formatNumber(5)}%`} />
     </Box>
   )
 }
@@ -145,6 +145,8 @@ function Form() {
   const { isLoading: submitting, mutate } = useContractMutation(LiquidityVaultContract)
 
   const approvedEnough = !isBuy || isTokenAllowanceEnough(amountIn)
+
+  console.log('approvedEnough', approvedEnough)
 
   return (
     <Box>

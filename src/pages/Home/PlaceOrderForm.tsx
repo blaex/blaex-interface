@@ -278,10 +278,18 @@ type MarketData = {
 
 function MarketStats({ contract, price, leverage }: { contract: Contract; price?: Num; leverage: number }) {
   const { data: market } = useContractQuery<BigNumber[], any, MarketData>(contract, 'getMarket', [1], {
-    select: (data: BigNumber[]) => ({
-      longRate: data[2].isZero() ? 50 : 50 + Number(formatEther(data[3].div(data[2]))),
-      fundingRate: Number(formatEther(data[4])),
-    }),
+    select: (data: BigNumber[]) => {
+      console.log(
+        'data',
+        data.map((e) => e.toString())
+      )
+      return {
+        longRate: data[2].isZero()
+          ? 50
+          : 50 + Number(formatEther(data[3].mul(BigNumber.from(10).pow(18)).div(data[2]))),
+        fundingRate: Number(formatEther(data[4])),
+      }
+    },
     refetchInterval: 10000,
   })
   const diff = 90 / leverage
@@ -323,11 +331,9 @@ function MarketStats({ contract, price, leverage }: { contract: Contract; price?
         <Type.Caption color="neutral4">
           <Trans>Funding</Trans>
         </Type.Caption>
-        <Type.Caption color="system2">
-          {market ? `${formatNumber(market.fundingRate * 100, 5, 5)}%` : '--'}
-        </Type.Caption>
+        <Type.Caption color="system2">{market ? `${formatNumber(market.fundingRate * 1, 5, 5)}%` : '--'}</Type.Caption>
         <Type.Caption textAlign="right" color="system1">
-          {market ? `${formatNumber(market.fundingRate * -100, 5, 5)}%` : '--'}
+          {market ? `${formatNumber(market.fundingRate * -1, 5, 5)}%` : '--'}
         </Type.Caption>
       </MarketStatWrapper>
     </Box>

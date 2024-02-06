@@ -8,7 +8,7 @@ import PositionHistory from './PositionHistory'
 
 const TABS = [
   { label: <Trans>Positions</Trans>, value: 'open-positions' },
-  { label: <Trans>Open Orders</Trans>, value: 'open-orders' },
+  // { label: <Trans>Open Orders</Trans>, value: 'open-orders' },
   { label: <Trans>Orders History</Trans>, value: 'orders-history' },
   // { label: <Trans>Trades History</Trans>, value: 'trades-history' },
   { label: <Trans>Positions History</Trans>, value: 'positions-history' },

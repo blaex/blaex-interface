@@ -148,9 +148,21 @@
       },
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "market",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "collateralToken",
+        "type": "address"
       },
       {
         "indexed": false,
@@ -161,7 +173,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "sizeDeltaInUsd",
+        "name": "sizeInToken",
         "type": "uint256"
       },
       {
@@ -172,14 +184,32 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "collateralDeltaInUsd",
-        "type": "uint256"
+        "internalType": "int256",
+        "name": "realisedPnl",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "paidFunding",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "latestInteractionFunding",
+        "type": "int256"
       },
       {
         "indexed": false,
         "internalType": "bool",
         "name": "isLong",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isClose",
         "type": "bool"
       }
     ],
@@ -210,19 +240,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      }
-    ],
-    "name": "cancelOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -260,21 +277,6 @@
       {
         "components": [
           {
-            "internalType": "address",
-            "name": "receiver",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "callbackContract",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "uiFeeReceiver",
-            "type": "address"
-          },
-          {
             "internalType": "uint256",
             "name": "market",
             "type": "uint256"
@@ -302,21 +304,6 @@
           {
             "internalType": "uint256",
             "name": "acceptablePrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "executionFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "callbackGasLimit",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minOutputAmount",
             "type": "uint256"
           },
           {
@@ -364,19 +351,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      }
-    ],
-    "name": "executeOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -509,17 +483,12 @@
           },
           {
             "internalType": "uint256",
-            "name": "callbackGasLimit",
+            "name": "submissionTime",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "minOutputAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "updatedAtBlock",
+            "name": "executionTime",
             "type": "uint256"
           },
           {
@@ -691,17 +660,12 @@
           },
           {
             "internalType": "uint256",
-            "name": "callbackGasLimit",
+            "name": "submissionTime",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "minOutputAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "updatedAtBlock",
+            "name": "executionTime",
             "type": "uint256"
           },
           {
