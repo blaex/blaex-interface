@@ -21,7 +21,7 @@ const ClosePositionModal = ({
   setIsOpen: (bool: boolean) => void
   close: (amount: number) => void
 }) => {
-  const [amount, setAmount] = useState<string | undefined>()
+  const [amount, setAmount] = useState<string | undefined>(size.str)
   const pAmount = parseInputValue(amount)
   return (
     <Modal isOpen={isOpen} onDismiss={() => setIsOpen(false)} title={<Trans>Enter close size</Trans>} hasClose>
