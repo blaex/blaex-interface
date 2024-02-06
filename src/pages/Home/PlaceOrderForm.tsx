@@ -54,7 +54,8 @@ export default function PlaceOrderForm() {
 
   const { data: price } = useContractQuery<BigNumber, any, Num>(PerpsMarketContract, 'indexPrice', [1], {
     select: (data: BigNumber) => new Num(data),
-    refetchInterval: 3000,
+    refetchInterval: 5000,
+    keepPreviousData: false,
   })
 
   return (
@@ -320,7 +321,6 @@ function Buttons({
             isLong,
           },
         ],
-        gasLimit: 1000000,
       },
       {
         onSettled: () => (longRef.current = undefined),

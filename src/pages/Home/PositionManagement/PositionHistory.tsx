@@ -7,7 +7,7 @@ import { OffchainPosition } from 'entities/Position'
 import { useAuthContext } from 'hooks/web3/useAuth'
 import Table from 'theme/Table'
 import { Box, Flex, Type } from 'theme/base'
-import { formatNumber } from 'utils/helpers/format'
+import { formatNumber, formatRelativeDate } from 'utils/helpers/format'
 import { isAddress } from 'utils/web3/contracts'
 
 export default function PositionHistory() {
@@ -48,6 +48,15 @@ const columns: any = [
           </Flex>
         </Flex>
       )
+    },
+  },
+  {
+    title: 'Time',
+    dataIndex: 'blockTime',
+    key: 'blockTime',
+    style: { minWidth: '130px', textAlign: 'left' },
+    render: (item: OffchainPosition) => {
+      return <Type.Small>{formatRelativeDate(item.blockTime)}</Type.Small>
     },
   },
   {

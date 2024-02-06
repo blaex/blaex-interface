@@ -37,9 +37,11 @@ const ClosePosition = ({ position, mutation }: { position: Position; mutation: U
       </Button>
       <ClosePositionModal
         isOpen={isOpen}
+        size={position.sizeInUsd}
         setIsOpen={setIsOpen}
-        close={() => {
+        close={(amount: number) => {
           if (!priceBn) return
+          const amountBn = parseEther(amount.toString())
           setSubmitting(true)
           mutation.mutate(
             {
@@ -48,8 +50,8 @@ const ClosePosition = ({ position, mutation }: { position: Position; mutation: U
                 {
                   market: 1,
                   collateralToken: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
-                  sizeDeltaUsd: position.sizeInUsd.bn,
-                  collateralDeltaUsd: position.collateralInUsd.bn,
+                  sizeDeltaUsd: amountBn,
+                  collateralDeltaUsd: amountBn.mul(position.collateralInUsd.bn).div(position.sizeInUsd.bn),
                   triggerPrice: priceBn,
                   acceptablePrice: calculateAcceptablePrice(priceBn, position.isLong),
                   orderType: OrderType.MarketDecrease,

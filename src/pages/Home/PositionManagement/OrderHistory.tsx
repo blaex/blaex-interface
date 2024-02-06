@@ -10,7 +10,7 @@ import useChain from 'hooks/web3/useChain'
 import Table from 'theme/Table'
 import { Box, Flex, Type } from 'theme/base'
 import { ORDER_TYPE_TRANS } from 'utils/config/translations'
-import { addressShorten, formatDate, formatNumber } from 'utils/helpers/format'
+import { addressShorten, formatNumber, formatRelativeDate } from 'utils/helpers/format'
 import { isAddress } from 'utils/web3/contracts'
 import { Chain } from 'utils/web3/types'
 
@@ -62,7 +62,7 @@ const columns: any = [
     key: 'executionTime',
     style: { minWidth: '130px', textAlign: 'left' },
     render: (item: OffchainOrder) => {
-      return <Type.Small>{formatDate(item.blockTime)}</Type.Small>
+      return <Type.Small>{formatRelativeDate(item.blockTime)}</Type.Small>
     },
   },
   {
