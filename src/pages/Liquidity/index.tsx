@@ -7,6 +7,7 @@ import { ReactNode, useState } from 'react'
 
 import CustomPageTitle from 'components/@ui/CustomPageTitle'
 import Divider from 'components/@ui/Divider'
+import TokenWrapper from 'components/@ui/TokenWrapper'
 import { useClickLoginButton } from 'components/LoginAction'
 import NumberInput from 'components/NumberInput'
 import { parseInputValue } from 'components/NumberInput/helpers'
@@ -19,11 +20,10 @@ import useERC20Approval from 'hooks/web3/useTokenApproval'
 import useWeb3 from 'hooks/web3/useWeb3'
 import { Button } from 'theme/Buttons'
 import Loading from 'theme/Loading'
-import { Box, Flex, Image, Type } from 'theme/base'
+import { Box, Flex, Type } from 'theme/base'
 import { CONTRACT_KEYS } from 'utils/config/keys'
 import { generateClipPath } from 'utils/helpers/css'
 import { formatNumber } from 'utils/helpers/format'
-import { parseMarketImageSrc } from 'utils/helpers/transform'
 import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
 import { CONTRACT_ABIS, CONTRACT_ADDRESSES } from 'utils/web3/contracts'
 
@@ -277,14 +277,6 @@ function BLIToken() {
       <Flex sx={{ gap: 2, height: 40, alignItems: 'center' }}>
         <TokenWrapper symbol="BLI" />
       </Flex>
-    </Flex>
-  )
-}
-function TokenWrapper({ symbol, size, hasText = true }: { symbol: string; size?: number; hasText?: boolean }) {
-  return (
-    <Flex sx={{ gap: 2 }}>
-      <Image src={parseMarketImageSrc(symbol)} width={size ?? 32} height={size ?? 32} />
-      {hasText && <Type.H5 sx={{ fontWeight: 'normal' }}>{symbol}</Type.H5>}
     </Flex>
   )
 }

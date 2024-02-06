@@ -23,10 +23,10 @@ export default function HomePage() {
     <>
       <CustomPageTitle title="Blaex" />
       <Box p={2} sx={{ height: '100%', width: '100%', maxWidth: 2000, mx: 'auto', overflow: 'hidden' }}>
-        <Box mb={2} sx={{ bg: 'background2', height: 80 }}>
+        <Box mb={2} sx={{ bg: 'background2', height: 56 }}>
           <TokenStatistics />
         </Box>
-        <Flex sx={{ width: '100%', gap: 2, overflow: 'hidden', height: 'calc(100% - 80px)' }}>
+        <Flex sx={{ width: '100%', gap: 2, overflow: 'hidden', height: 'calc(100% - 56px)' }}>
           <Box flex="1" sx={{ height: '100%' }}>
             <Flex sx={{ gap: 2, height: '65%' }}>
               <Box flex="1" sx={{ bg: 'background2', height: '100%', overflow: 'hidden' }}>
