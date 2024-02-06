@@ -25,6 +25,7 @@ import { CONTRACT_KEYS } from 'utils/config/keys'
 import { formatNumber } from 'utils/helpers/format'
 import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
 import { CONTRACT_ADDRESSES } from 'utils/web3/contracts'
+import { calculateAcceptablePrice } from 'utils/web3/trades'
 import { Account } from 'utils/web3/types'
 
 const MAX_SIZE_USD = 10000
@@ -314,11 +315,12 @@ function Buttons({
             sizeDeltaUsd: amountBn.mul(leverage),
             collateralDeltaUsd: amountBn,
             triggerPrice: price.bn,
-            acceptablePrice: price.bn,
+            acceptablePrice: calculateAcceptablePrice(price.bn, isLong),
             orderType: OrderType.MarketIncrease,
             isLong,
           },
         ],
+        gasLimit: 1000000,
       },
       {
         onSettled: () => (longRef.current = undefined),

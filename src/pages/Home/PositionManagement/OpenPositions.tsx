@@ -1,17 +1,20 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Web3Provider } from '@ethersproject/providers'
+import { UseMutationResult } from 'react-query'
 
 import TokenWrapper from 'components/@ui/TokenWrapper'
 import { LiquidatePrice, MarketPrice, OpeningPnL } from 'components/renderProps'
 import Num from 'entities/Num'
 import { Position } from 'entities/Position'
 import { usePerpsMarketContract } from 'hooks/web3/useContract'
+import useContractMutation from 'hooks/web3/useContractMutation'
 import useContractQuery from 'hooks/web3/useContractQuery'
 import useWeb3 from 'hooks/web3/useWeb3'
-import { Button } from 'theme/Buttons'
 import Table from 'theme/Table'
 import { Box, Flex, Type } from 'theme/base'
 import { formatNumber } from 'utils/helpers/format'
+
+import ClosePosition from './ClosePosition'
 
 export default function OpenPositions() {
   const { walletAccount, walletProvider, publicProvider } = useWeb3()
@@ -47,10 +50,10 @@ export default function OpenPositions() {
       enabled: !!walletAccount?.address,
     }
   )
-  console.log('openPositions', openPositions)
+  const mutation = useContractMutation(PerpsMarketContract)
   return (
     <Box sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <Table data={openPositions} restrictHeight isLoading={false} columns={columns} />
+      <Table data={openPositions} restrictHeight isLoading={false} columns={columns} externalSource={mutation} />
     </Box>
   )
 }
@@ -58,8 +61,8 @@ export default function OpenPositions() {
 const columns: any = [
   {
     title: 'Market',
-    dataIndex: undefined,
-    key: undefined,
+    dataIndex: 'market',
+    key: 'market',
     style: { minWidth: '150px', textAlign: 'left' },
     render: (item: Position) => {
       const leverage = `${formatNumber(item.sizeInUsd.num / item.collateralInUsd.num)}x`
@@ -83,8 +86,8 @@ const columns: any = [
   },
   {
     title: 'Market Price',
-    dataIndex: undefined,
-    key: undefined,
+    dataIndex: 'price',
+    key: 'price',
     style: { minWidth: '100px', textAlign: 'right' },
     render: (item: Position) => {
       return (
@@ -96,8 +99,8 @@ const columns: any = [
   },
   {
     title: 'Collateral',
-    dataIndex: undefined,
-    key: undefined,
+    dataIndex: 'collateral',
+    key: 'collateral',
     style: { minWidth: '100px', textAlign: 'right' },
     render: (item: Position) => {
       return <Type.Small>${formatNumber(item.collateralInUsd.num, 2, 2)}</Type.Small>
@@ -105,8 +108,8 @@ const columns: any = [
   },
   {
     title: 'Size',
-    dataIndex: undefined,
-    key: undefined,
+    dataIndex: 'size',
+    key: 'size',
     style: { minWidth: '180px', textAlign: 'right' },
     render: (item: Position) => {
       return (
@@ -124,8 +127,8 @@ const columns: any = [
   },
   {
     title: 'Entry Price',
-    dataIndex: undefined,
-    key: undefined,
+    dataIndex: 'entryPrice',
+    key: 'entryPrice',
     style: { minWidth: '130px', textAlign: 'right' },
     render: (item: any) => {
       return <Type.Small>${formatNumber(item.sizeInUsd.num / item.sizeInToken.num, 2, 2)}</Type.Small>
@@ -133,8 +136,8 @@ const columns: any = [
   },
   {
     title: 'Est.Liq.Price',
-    dataIndex: undefined,
-    key: undefined,
+    dataIndex: 'liquidatePrice',
+    key: 'liquidatePrice',
     style: { minWidth: '130px', textAlign: 'right' },
     render: (item: Position) => {
       return (
@@ -146,8 +149,8 @@ const columns: any = [
   },
   {
     title: 'PnL',
-    dataIndex: undefined,
-    key: undefined,
+    dataIndex: 'liquidatePrice',
+    key: 'liquidatePrice',
     style: { minWidth: '100px', textAlign: 'right' },
     render: (item: Position) => {
       return <OpeningPnL data={item} />
@@ -174,16 +177,13 @@ const columns: any = [
   // },
   {
     title: '',
-    dataIndex: undefined,
-    key: undefined,
+    dataIndex: 'action',
+    key: 'action',
     style: { minWidth: '100px', textAlign: 'right' },
-    render: (item: any) => {
+    render: (item: Position, index: number, mutation: UseMutationResult) => {
       return (
         <Box pr={3}>
-          <Button variant="normal" size="xs" height={40} sx={{ fontWeight: 'normal' }}>
-            {/* <Pencil size={24} /> */}
-            Close
-          </Button>
+          <ClosePosition position={item} mutation={mutation} />
         </Box>
       )
     },
