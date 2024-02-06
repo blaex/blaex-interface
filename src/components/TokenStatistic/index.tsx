@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { ReactNode } from 'react'
 
 import { SignedText } from 'components/@ui/DecoratedText/SignedText'
+import TokenWrapper from 'components/@ui/TokenWrapper'
 import { use24hPriceDelta } from 'hooks/helpers/use24PriceDelta'
 import useUsdPrices from 'hooks/store/useUsdPrices'
 import { Flex, Type } from 'theme/base'
@@ -13,8 +14,12 @@ export default function TokenStatistics() {
   const { priceDelta } = use24hPriceDelta('ETHUSD')
 
   return (
-    <Flex py={3} sx={{ gap: 4 }}>
-      <Type.Large mr={3}>ETH/USD</Type.Large>
+    <Flex p={2} sx={{ gap: 4 }}>
+      <Flex alignItems="center" sx={{ gap: 2 }}>
+        <TokenWrapper symbol="ETH" hasText={false} />
+        <Type.Large mr={3}>ETH/USD</Type.Large>
+      </Flex>
+
       <StatisticItem
         width={85}
         title={<Trans>Market Price</Trans>}
@@ -34,8 +39,8 @@ export default function TokenStatistics() {
 function StatisticItem({ title, value, ...props }: { title: ReactNode; value: ReactNode } & BoxProps) {
   return (
     <Flex flexDirection="column" {...props}>
-      <Type.Caption color="neutral5">{title}</Type.Caption>
-      <Type.Body>{value}</Type.Body>
+      <Type.Small color="neutral5">{title}</Type.Small>
+      <Type.Caption>{value}</Type.Caption>
     </Flex>
   )
 }
