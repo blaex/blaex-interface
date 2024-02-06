@@ -130,6 +130,12 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "executionPrice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "protocolFees",
         "type": "uint256"
       },
@@ -336,7 +342,7 @@
     ],
     "name": "createOrder",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -444,6 +450,11 @@
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
             "internalType": "address",
             "name": "account",
             "type": "address"
@@ -457,11 +468,6 @@
             "internalType": "address",
             "name": "collateralToken",
             "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
           },
           {
             "internalType": "enum IPerpsMarket.OrderType",
@@ -486,6 +492,11 @@
           {
             "internalType": "uint256",
             "name": "acceptablePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "executionPrice",
             "type": "uint256"
           },
           {
@@ -545,6 +556,11 @@
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
             "internalType": "address",
             "name": "account",
             "type": "address"
@@ -558,11 +574,6 @@
             "internalType": "address",
             "name": "collateralToken",
             "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -631,6 +642,11 @@
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
             "internalType": "address",
             "name": "account",
             "type": "address"
@@ -644,11 +660,6 @@
             "internalType": "address",
             "name": "collateralToken",
             "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
           },
           {
             "internalType": "enum IPerpsMarket.OrderType",
@@ -673,6 +684,11 @@
           {
             "internalType": "uint256",
             "name": "acceptablePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "executionPrice",
             "type": "uint256"
           },
           {
@@ -732,6 +748,11 @@
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
             "internalType": "address",
             "name": "account",
             "type": "address"
@@ -745,11 +766,6 @@
             "internalType": "address",
             "name": "collateralToken",
             "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
           },
           {
             "internalType": "uint256",
