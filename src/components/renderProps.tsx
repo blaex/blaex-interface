@@ -58,12 +58,17 @@ function OpeningPnLComponent({ data, prices, ignoreFee, sx }: OpeningPnLComponen
   const marketPrice = prices['ETHUSD']
   const openingPnl = calcOpeningPnL(data, marketPrice)
   const pnl = ignoreFee ? openingPnl : openingPnl - data.paidFees.num + data.paidFunding.num
-  return SignedText({
-    value: pnl,
-    maxDigit: 2,
-    minDigit: 2,
-    showPlus: true,
-    prefix: '$',
-    sx: { textAlign: 'right', width: '100%', ...sx },
-  })
+  return (
+    <Type.Small>
+      {SignedText({
+        value: pnl,
+        maxDigit: 2,
+        minDigit: 2,
+        showPlus: true,
+        fontInherit: true,
+        prefix: '$',
+        sx: { textAlign: 'right', width: '100%', ...sx },
+      })}
+    </Type.Small>
+  )
 }
