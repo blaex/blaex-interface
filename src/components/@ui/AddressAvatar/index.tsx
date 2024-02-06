@@ -15,7 +15,7 @@ const AddressAvatar = ({ address, size = 48 }: { address: string; size?: number 
   //   '0000',
   // ]
 
-  const { emoji, gradient } = generateAvatar(address)
+  const { emoji, bg } = generateAvatar(address)
 
   return (
     <Flex
@@ -24,7 +24,7 @@ const AddressAvatar = ({ address, size = 48 }: { address: string; size?: number 
       fontSize={size * 0.65}
       sx={{
         overflow: 'hidden',
-        background: gradient,
+        background: bg,
         flexShrink: 0,
       }}
       alignItems="center"

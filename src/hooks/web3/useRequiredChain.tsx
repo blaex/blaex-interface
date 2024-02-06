@@ -1,10 +1,9 @@
 import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 
-import switchChain from 'assets/images/switch-chain.png'
 import useGlobalDialog from 'hooks/store/useGlobalDialog'
 import useChain from 'hooks/web3/useChain'
 import { Button } from 'theme/Buttons'
-import { Box, Flex, Image, Type } from 'theme/base'
+import { Box, Flex, Type } from 'theme/base'
 import { DEFAULT_CHAIN_ID, getChainMetadata } from 'utils/web3/chains'
 
 const useRequiredChain = ({
@@ -26,9 +25,8 @@ const useRequiredChain = ({
 
   const renderComponent = useCallback(() => {
     return (
-      <Box sx={{ minWidth: 300 }}>
+      <Box sx={{ minWidth: 300, border: 'small', borderColor: 'neutral6', px: 3, py: 24 }} mt={3}>
         <Flex sx={{ alignItems: 'center', flexDirection: 'column' }}>
-          <Image mb={3} width={150} height={150} src={switchChain} />
           <Type.Caption mb={3} color="neutral2">
             {title}
           </Type.Caption>
@@ -72,6 +70,7 @@ const useRequiredChain = ({
             body: (
               <Flex sx={{ gap: 2 }} justifyContent="center" mt={3}>
                 <Button
+                  variant="normal"
                   onClick={() => {
                     hideDialog()
                     onDismiss && onDismiss()

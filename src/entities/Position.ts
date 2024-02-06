@@ -33,3 +33,28 @@ export interface OnchainPosition {
   sizeInToken: BigNumber
   sizeInUsd: BigNumber
 }
+
+export interface OffchainPosition {
+  id: string
+  txHash: string
+  logId: number
+  blockNumber: number
+  blockTime: string
+  positionId: number
+  account: string
+  market: number
+  collateralToken: string
+  sizeInUsd: number
+  sizeInToken: number
+  collateralInUsd: number
+  lastSizeInUsd: number
+  lastSizeInToken: number
+  lastCollateralInUsd: number
+  realisedPnl: number
+  paidFunding: number
+  latestInteractionFunding: number
+  paidFees: number
+  isLong: boolean
+  isClose: boolean
+  createdAt: string
+}

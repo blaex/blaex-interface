@@ -51,7 +51,7 @@ const StyledDialogContent = styled(({ background, minHeight, maxHeight, maxWidth
     position: relative;
     background: ${({ theme, background }: { theme: DefaultTheme; background?: keyof Colors }) =>
       background ? (theme.colors[background] as string) : 'black'};
-    border: 1px solid ${({ theme }: { theme: DefaultTheme }) => theme.colors.neutral5};
+    border: 1px solid ${({ theme }: { theme: DefaultTheme }) => theme.colors.neutral7};
     box-shadow: ${({ theme }: { theme: DefaultTheme }) => theme.shadows[4]};
     width: ${({ width }) => width ?? '50vw'};
     align-self: ${({ mobile, mode }) =>
@@ -70,7 +70,6 @@ const StyledDialogContent = styled(({ background, minHeight, maxHeight, maxWidth
         min-height: ${minHeight};
       `}
     display: flex;
-    border-radius: ${({ theme }: { theme: DefaultTheme }) => theme.borderRadius.sm};
     ${({ theme }) => theme.mediaWidth.upToMedium`
       width: 65vw;
     `}

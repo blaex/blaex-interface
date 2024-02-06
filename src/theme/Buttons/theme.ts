@@ -5,7 +5,7 @@ import { sizes, variants } from './types'
 export const styleVariants = {
   [variants.NORMAL]: {
     borderRadius: 0,
-    color: 'primary1',
+    color: 'neutral1',
     fontSize: '16px',
     bg: 'neutral7',
     borderColor: 'transparent',

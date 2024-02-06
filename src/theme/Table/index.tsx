@@ -159,7 +159,7 @@ TableProps<T, K>) {
         )}
 
         {!isLoading && !!data && data.length === 0 && (
-          <Box mb={24} sx={{ bg: 'neutral8', borderRadius: 'sm' }}>
+          <Box mb={24}>
             <NoDataFound message={noDataMessage} />
           </Box>
         )}
