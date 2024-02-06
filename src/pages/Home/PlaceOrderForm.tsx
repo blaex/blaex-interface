@@ -1,21 +1,30 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers'
-import { formatEther } from '@ethersproject/units'
+import { formatEther, parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { DifferentialBar } from 'components/@ui/DifferentialBar'
+import ToastBody from 'components/@ui/ToastBody'
 import NumberInput from 'components/NumberInput'
 import { parseInputValue } from 'components/NumberInput/helpers'
 import Num from 'entities/Num'
 import useBalancesStore from 'hooks/store/useBalancesManagement'
 import { usePerpsMarketContract } from 'hooks/web3/useContract'
+import useContractMutation from 'hooks/web3/useContractMutation'
 import useContractQuery from 'hooks/web3/useContractQuery'
+import useERC20Approval from 'hooks/web3/useTokenApproval'
 import useWeb3 from 'hooks/web3/useWeb3'
 import { Button } from 'theme/Buttons'
 import { Box, Flex, Type } from 'theme/base'
+import { OrderType } from 'utils/config/constants'
+import { CONTRACT_KEYS } from 'utils/config/keys'
 import { formatNumber } from 'utils/helpers/format'
+import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
+import { CONTRACT_ADDRESSES } from 'utils/web3/contracts'
+import { Account } from 'utils/web3/types'
 
 const MAX_SIZE_USD = 10000
 
@@ -52,7 +61,13 @@ export default function PlaceOrderForm() {
       <AmountInput amount={amount} leverage={pLeverage} onChangeAmount={onChangeAmount} />
       <LeverageInput leverage={leverage} onChangeLeverage={onChangeLeverage} />
       <Summary amount={pAmount} leverage={pLeverage} price={price} />
-      <Buttons amount={pAmount} leverage={pLeverage} />
+      <Buttons
+        amount={pAmount}
+        leverage={pLeverage}
+        price={price}
+        contract={PerpsMarketContract}
+        walletAccount={walletAccount}
+      />
       <MarketStats contract={PerpsMarketContract} price={price} leverage={pLeverage} />
     </Box>
   )
@@ -245,7 +260,7 @@ function Summary({
         label={<Trans>Order Fees</Trans>}
         value={sizeInUsd ? `$${formatNumber((sizeInUsd * 0.05) / 100, 2, 2)}` : '--'}
       />
-      <SummaryItem label={<Trans>Keeper Fees</Trans>} value={'$1.00'} />
+      {/* <SummaryItem label={<Trans>Keeper Fees</Trans>} value={'$1.00'} /> */}
     </Box>
   )
 }
@@ -258,16 +273,86 @@ function SummaryItem({ label, value, sx }: { label: ReactNode; value: ReactNode;
   )
 }
 
-function Buttons({ amount, leverage }: { amount: number | undefined; leverage: number | undefined }) {
-  return (
+function Buttons({
+  amount,
+  leverage,
+  price,
+  contract,
+  walletAccount,
+}: {
+  amount: number | undefined
+  leverage: number | undefined
+  price?: Num
+  contract: Contract
+  walletAccount: Account | null
+}) {
+  const longRef = useRef<boolean>()
+  const { isTokenAllowanceEnough, approving, approveToken } = useERC20Approval({
+    token: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
+    account: walletAccount?.address,
+    spender: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.PERPS_MARKET],
+  })
+  const { mutate, isLoading } = useContractMutation(contract)
+  const approvedEnough = isTokenAllowanceEnough(amount)
+  const createOrder = (isLong: boolean) => {
+    if (!amount || !leverage || !approvedEnough) return
+    if (!price) {
+      toast.error(<ToastBody title={<Trans>Error</Trans>} message={<Trans>Cannot fetch onchain price</Trans>} />)
+      return
+    }
+    longRef.current = isLong
+    const amountBn = parseEther(amount.toString())
+    mutate(
+      {
+        method: 'createOrder',
+        params: [
+          {
+            market: 1,
+            collateralToken: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
+            sizeDeltaUsd: amountBn.mul(leverage),
+            collateralDeltaUsd: amountBn,
+            triggerPrice: price.bn,
+            acceptablePrice: price.bn,
+            orderType: OrderType.MarketIncrease,
+            isLong,
+          },
+        ],
+      },
+      {
+        onSettled: () => (longRef.current = undefined),
+      }
+    )
+  }
+  return approvedEnough ? (
     <Flex mb={3} sx={{ gap: 3, '& > *': { flex: 1, height: 48 } }}>
-      <Button variant="long">
+      <Button
+        variant="long"
+        disabled={isLoading || !approvedEnough}
+        isLoading={isLoading && longRef.current === true}
+        onClick={() => createOrder(true)}
+      >
         <Trans>Long</Trans>
       </Button>
-      <Button variant="short">
+      <Button
+        variant="short"
+        disabled={isLoading || !approvedEnough}
+        isLoading={isLoading && longRef.current === false}
+        onClick={() => createOrder(false)}
+      >
         <Trans>Short</Trans>
       </Button>
     </Flex>
+  ) : (
+    <Button
+      variant="primary"
+      block
+      sx={{ mt: 2, mb: 3, py: 3 }}
+      isLoading={approving}
+      disabled={approvedEnough || approving}
+      onClick={() => amount && approveToken(amount)}
+    >
+      Approve USDB
+    </Button>
   )
 }
 
@@ -279,10 +364,10 @@ type MarketData = {
 function MarketStats({ contract, price, leverage }: { contract: Contract; price?: Num; leverage: number }) {
   const { data: market } = useContractQuery<BigNumber[], any, MarketData>(contract, 'getMarket', [1], {
     select: (data: BigNumber[]) => {
-      console.log(
-        'data',
-        data.map((e) => e.toString())
-      )
+      // console.log(
+      //   'data',
+      //   data.map((e) => e.toString())
+      // )
       return {
         longRate: data[2].isZero()
           ? 50

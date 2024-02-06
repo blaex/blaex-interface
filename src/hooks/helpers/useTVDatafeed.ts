@@ -15,7 +15,7 @@ export default function useTVDatafeed({ tokenSymbol }: { tokenSymbol?: string })
     return {
       datafeed: {
         onReady: (callback: any) => {
-          console.log('[onReady]: Method call')
+          // console.log('[onReady]: Method call')
           fetch(`${API_ENDPOINT}/config`).then((response) => {
             response.json().then((configurationData) => {
               setTimeout(() => callback(configurationData))
@@ -23,7 +23,7 @@ export default function useTVDatafeed({ tokenSymbol }: { tokenSymbol?: string })
           })
         },
         searchSymbols: (userInput: any, exchange: any, symbolType: any, onResultReadyCallback: any) => {
-          console.log('[searchSymbols]: Method call')
+          // console.log('[searchSymbols]: Method call')
           fetch(`${API_ENDPOINT}/search?query=${userInput}`).then((response) => {
             response.json().then((data) => {
               onResultReadyCallback(data)
@@ -31,16 +31,16 @@ export default function useTVDatafeed({ tokenSymbol }: { tokenSymbol?: string })
           })
         },
         resolveSymbol: (symbolName: any, onSymbolResolvedCallback: any, onResolveErrorCallback: any) => {
-          console.log('[resolveSymbol]: Method call', symbolName)
+          // console.log('[resolveSymbol]: Method call', symbolName)
           fetch(`${API_ENDPOINT}/symbols?symbol=${symbolName}`).then((response) => {
             response
               .json()
               .then((symbolInfo) => {
-                console.log('[resolveSymbol]: Symbol resolved', symbolInfo)
+                // console.log('[resolveSymbol]: Symbol resolved', symbolInfo)
                 onSymbolResolvedCallback({ ...symbolInfo, pricescale: 100, description: 'ETH / USD (Blaex)' })
               })
               .catch((error) => {
-                console.log('[resolveSymbol]: Cannot resolve symbol', symbolName)
+                // console.log('[resolveSymbol]: Cannot resolve symbol', symbolName)
                 onResolveErrorCallback('Cannot resolve symbol')
                 return
               })
@@ -54,7 +54,7 @@ export default function useTVDatafeed({ tokenSymbol }: { tokenSymbol?: string })
           onErrorCallback: any
         ) => {
           const { from, to, firstDataRequest } = periodParams
-          console.log('[getBars]: Method call', symbolInfo, resolution, from, to)
+          // console.log('[getBars]: Method call', symbolInfo, resolution, from, to)
           fetch(
             `${API_ENDPOINT}/history?symbol=${symbolInfo.ticker}&from=${periodParams.from}&to=${periodParams.to}&resolution=${resolution}`
           ).then((response) => {
@@ -85,7 +85,7 @@ export default function useTVDatafeed({ tokenSymbol }: { tokenSymbol?: string })
                 onHistoryCallback(bars, { noData: false })
               })
               .catch((error) => {
-                console.log('[getBars]: Get error', error)
+                // console.log('[getBars]: Get error', error)
                 onErrorCallback(error)
               })
           })
@@ -97,7 +97,7 @@ export default function useTVDatafeed({ tokenSymbol }: { tokenSymbol?: string })
           subscriberUID: any,
           onResetCacheNeededCallback: any
         ) => {
-          console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID)
+          // console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID)
           subscribeOnStream(
             symbolInfo,
             resolution,
@@ -108,7 +108,7 @@ export default function useTVDatafeed({ tokenSymbol }: { tokenSymbol?: string })
           )
         },
         unsubscribeBars: (subscriberUID: any) => {
-          console.log('[unsubscribeBars]: Method call with subscriberUID:', subscriberUID)
+          // console.log('[unsubscribeBars]: Method call with subscriberUID:', subscriberUID)
           unsubscribeFromStream(subscriberUID)
 
           setIsReady(false)

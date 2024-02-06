@@ -146,8 +146,6 @@ function Form() {
 
   const approvedEnough = !isBuy || isTokenAllowanceEnough(amountIn)
 
-  console.log('approvedEnough', approvedEnough)
-
   return (
     <Box>
       <TabHeader currentTab={currentTab} onChangeTab={(option) => setTab(option)} />

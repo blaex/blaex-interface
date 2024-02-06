@@ -1,9 +1,10 @@
 import { Trans } from '@lingui/macro'
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 import { Button } from 'theme/Buttons'
 import { Box, Flex } from 'theme/base'
 
+import OpenPositions from './OpenPositions'
 import PositionHistory from './PositionHistory'
 
 const TABS = [
@@ -15,7 +16,7 @@ const TABS = [
 ]
 const DEFAULT_TAB = TABS[0]
 type TabOption = typeof DEFAULT_TAB
-export default function PositionManagement() {
+export default function PositionManagement({ isValid, alert }: { isValid: boolean; alert: ReactNode }) {
   const [currentTab, setTab] = useState(DEFAULT_TAB)
   return (
     <Flex sx={{ flexDirection: 'column', width: '100%', height: '100%' }}>
@@ -24,7 +25,8 @@ export default function PositionManagement() {
       </Box>
 
       <Box flex="1 0 0" sx={{ bg: 'background2', borderTop: 'small', borderTopColor: 'stroke', mt: '-1px' }}>
-        <PositionHistory />
+        {currentTab.value === 'open-positions' && <>{isValid ? <OpenPositions /> : alert}</>}
+        {currentTab.value === 'positions-history' && <PositionHistory />}
       </Box>
     </Flex>
   )

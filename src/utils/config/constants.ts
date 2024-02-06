@@ -47,3 +47,10 @@ export const RELOAD_TOP_OPENING_POSITIONS = 5 * 60 * 1000 //milliseconds
 export const MAX_IMAGE_SIZE = 10 * 1024 * 1024 //mb
 
 export const DEFAULT_COVER_IMAGE_URL = '/images/cover.png'
+
+export enum OrderType {
+  MarketIncrease,
+  LimitIncrease,
+  MarketDecrease,
+  LimitDecrease,
+}

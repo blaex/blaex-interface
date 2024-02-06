@@ -130,7 +130,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "keeperFee",
+        "name": "protocolFees",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "keeperFees",
         "type": "uint256"
       }
     ],
@@ -199,6 +205,12 @@
         "internalType": "int256",
         "name": "latestInteractionFunding",
         "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "paidFees",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -478,7 +490,12 @@
           },
           {
             "internalType": "uint256",
-            "name": "keeperFee",
+            "name": "protocolFees",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "keeperFees",
             "type": "uint256"
           },
           {
@@ -578,6 +595,11 @@
             "type": "int256"
           },
           {
+            "internalType": "uint256",
+            "name": "paidFees",
+            "type": "uint256"
+          },
+          {
             "internalType": "bool",
             "name": "isLong",
             "type": "bool"
@@ -655,7 +677,12 @@
           },
           {
             "internalType": "uint256",
-            "name": "keeperFee",
+            "name": "protocolFees",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "keeperFees",
             "type": "uint256"
           },
           {
@@ -753,6 +780,11 @@
             "internalType": "int256",
             "name": "latestInteractionFunding",
             "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "paidFees",
+            "type": "uint256"
           },
           {
             "internalType": "bool",

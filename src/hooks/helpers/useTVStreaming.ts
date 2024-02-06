@@ -49,7 +49,7 @@ export default function useTVStreaming({ tokenSymbol }: { tokenSymbol?: string }
       })
     function attemptReconnect(retriesLeft: any, delay: any) {
       if (retriesLeft > 0) {
-        console.log(`[stream] Attempting to reconnect in ${delay}ms...`)
+        // console.log(`[stream] Attempting to reconnect in ${delay}ms...`)
         setTimeout(() => {
           startStreaming(retriesLeft - 1, delay)
         }, delay)
@@ -84,7 +84,7 @@ export default function useTVStreaming({ tokenSymbol }: { tokenSymbol?: string }
         low: tradePrice,
         close: tradePrice,
       }
-      console.log('[stream] Generate new bar', bar)
+      // console.log('[stream] Generate new bar', bar)
     } else {
       bar = {
         ...lastDailyBar,
@@ -92,11 +92,11 @@ export default function useTVStreaming({ tokenSymbol }: { tokenSymbol?: string }
         low: Math.min(lastDailyBar.low, tradePrice),
         close: tradePrice,
       }
-      console.log('[stream] Update the latest bar by price', tradePrice)
+      // console.log('[stream] Update the latest bar by price', tradePrice)
     }
 
     subscriptionItem.lastDailyBar = bar
-    console.log('tokenSymbol', tokenSymbol, tradePrice)
+    // console.log('tokenSymbol', tokenSymbol, tradePrice)
     if (tokenSymbol) {
       setPrice({ address: tokenSymbol, price: tradePrice })
     }
@@ -127,7 +127,7 @@ export default function useTVStreaming({ tokenSymbol }: { tokenSymbol?: string }
       handlers: [handler],
     }
     channelToSubscription.set(channelString, subscriptionItem)
-    console.log('[subscribeBars]: Subscribe to streaming. Channel:', channelString, subscriptionItem)
+    // console.log('[subscribeBars]: Subscribe to streaming. Channel:', channelString, subscriptionItem)
 
     // Start streaming when the first subscription is made
     startStreaming()
@@ -141,7 +141,7 @@ export default function useTVStreaming({ tokenSymbol }: { tokenSymbol?: string }
 
       if (handlerIndex !== -1) {
         // Unsubscribe from the channel if it is the last handler
-        console.log('[unsubscribeBars]: Unsubscribe from streaming. Channel:', channelString)
+        // console.log('[unsubscribeBars]: Unsubscribe from streaming. Channel:', channelString)
         channelToSubscription.delete(channelString)
         break
       }

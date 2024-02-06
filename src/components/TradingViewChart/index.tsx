@@ -25,7 +25,7 @@ function TradingViewChart() {
         debug: false,
         enabled_features: ['show_exchange_logos'],
         theme: 'Dark',
-        custom_css_url: '/tradingview-chart.css',
+
         overrides: {
           'paneProperties.background': themeColors.background2,
           'paneProperties.backgroundType': 'solid',
@@ -35,12 +35,12 @@ function TradingViewChart() {
       widget.onChartReady(() => {
         const chart = widget.chart()
         chart.getSeries().setChartStyleProperties(1, {
-          upColor: themeColors.green1,
-          downColor: themeColors.red1,
-          borderUpColor: themeColors.green1,
-          borderDownColor: themeColors.red1,
-          wickUpColor: themeColors.green1,
-          wickDownColor: themeColors.red1,
+          upColor: themeColors.system2,
+          downColor: themeColors.system1,
+          borderUpColor: themeColors.system2,
+          borderDownColor: themeColors.system1,
+          wickUpColor: themeColors.system2,
+          wickDownColor: themeColors.system1,
         })
       })
     }

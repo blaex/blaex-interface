@@ -37,7 +37,7 @@ export default function HomePage() {
               </Box>
             </Flex>
             <Box sx={{ height: '35%', flexShrink: 0, pb: 2 }}>
-              <PositionManagement />
+              <PositionManagement isValid={isValid} alert={alert} />
             </Box>
           </Box>
 
