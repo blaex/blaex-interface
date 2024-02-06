@@ -11,6 +11,7 @@ import ToastBody from 'components/@ui/ToastBody'
 import NumberInput from 'components/NumberInput'
 import { parseInputValue } from 'components/NumberInput/helpers'
 import Num from 'entities/Num'
+import useRefetchQueries from 'hooks/helpers/ueRefetchQueries'
 import useBalancesStore from 'hooks/store/useBalancesManagement'
 import { usePerpsMarketContract } from 'hooks/web3/useContract'
 import useContractMutation from 'hooks/web3/useContractMutation'
@@ -286,6 +287,7 @@ function Buttons({
   contract: Contract
   walletAccount: Account | null
 }) {
+  const refetchQueries = useRefetchQueries()
   const longRef = useRef<boolean>()
   const { isTokenAllowanceEnough, approving, approveToken } = useERC20Approval({
     token: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
@@ -320,6 +322,9 @@ function Buttons({
       },
       {
         onSettled: () => (longRef.current = undefined),
+        onSuccess: () => {
+          refetchQueries(['getOpenPositions'])
+        },
       }
     )
   }
