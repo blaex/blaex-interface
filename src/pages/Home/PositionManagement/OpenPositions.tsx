@@ -62,7 +62,7 @@ const columns: any = [
     key: undefined,
     style: { minWidth: '150px', textAlign: 'left' },
     render: (item: Position) => {
-      const leverage = item.sizeInUsd.num / item.collateralInUsd.num
+      const leverage = `${formatNumber(item.sizeInUsd.num / item.collateralInUsd.num)}x`
       return (
         <Flex alignItems="center" justifyContent="start" sx={{ gap: 2 }}>
           <TokenWrapper symbol="ETH" size={24} hasText={false} />
@@ -70,11 +70,11 @@ const columns: any = [
             <Type.Small display="block">ETH/USD</Type.Small>
             <Flex alignItems="center" sx={{ gap: 1 }}>
               {item.isLong ? (
-                <Type.Small color="system2">Long</Type.Small>
+                <Type.Small color="system2">Long {leverage}</Type.Small>
               ) : (
-                <Type.Small color="system1">Short</Type.Small>
+                <Type.Small color="system1">Short {leverage}</Type.Small>
               )}
-              <Type.Small>{formatNumber(leverage, 1, 1)}x</Type.Small>
+              <Type.Small></Type.Small>
             </Flex>
           </Flex>
         </Flex>

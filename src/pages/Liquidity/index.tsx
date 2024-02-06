@@ -4,7 +4,9 @@ import { formatEther, parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { ArrowsDownUp } from '@phosphor-icons/react'
 import { ReactNode, useState } from 'react'
+import { useQuery } from 'react-query'
 
+import { getLiquidityApr } from 'apis/liquidityApis'
 import CustomPageTitle from 'components/@ui/CustomPageTitle'
 import Divider from 'components/@ui/Divider'
 import TokenWrapper from 'components/@ui/TokenWrapper'
@@ -94,11 +96,16 @@ function Overview() {
         })`}
       />
       <Divider my={3} />
-      <Stats label={<Trans>Protocol Yield APR</Trans>} value={`${formatNumber(12.33)}%`} />
+      <ProtocolYield />
       <Box mb={2} />
       <Stats label={<Trans>Blast Native Yield APR</Trans>} value={`${formatNumber(5)}%`} />
     </Box>
   )
+}
+
+function ProtocolYield() {
+  const { data: apr } = useQuery('protocol-yield', getLiquidityApr)
+  return <Stats label={<Trans>Protocol Yield APR</Trans>} value={apr ? `${formatNumber(apr * 100)}%` : '--'} />
 }
 
 function Stats({ label, value }: { label: ReactNode; value: ReactNode }) {

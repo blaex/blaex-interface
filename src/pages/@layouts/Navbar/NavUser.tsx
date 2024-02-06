@@ -80,13 +80,13 @@ const NavUser = () => {
             <Flex justifyContent="center" flexDirection="column">
               <Box textAlign="center">
                 <Type.BodyBold>
-                  <Trans>Are you sure to logout?</Trans>
+                  <Trans>Do you want to logout?</Trans>
                 </Type.BodyBold>
               </Box>
             </Flex>
 
             <Flex mt={4} justifyContent="space-between">
-              <Button px={4} width="49%" type="button" onClick={() => setIsShowModalLogout(false)}>
+              <Button variant="normal" px={4} width="49%" type="button" onClick={() => setIsShowModalLogout(false)}>
                 <Trans>Back</Trans>
               </Button>
               <Button type="button" variant="primary" px={4} width="49%" onClick={logout}>
