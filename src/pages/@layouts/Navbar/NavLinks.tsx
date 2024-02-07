@@ -1,15 +1,22 @@
 import { Trans } from '@lingui/macro'
+import { ArrowSquareUpRight } from '@phosphor-icons/react'
 import { ReactNode } from 'react'
 import { NavLink as Link, NavLinkProps } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
-import { Box } from 'theme/base'
+import { Box, Flex, Type } from 'theme/base'
 import ROUTES from 'utils/config/routes'
 
 export function DesktopNavLinks() {
   return (
     <DesktopWrapper>
       <NavLinks />
+      <a href="https://github.com/blaex" target="_blank" rel="noreferrer">
+        <Flex alignItems="center" color="neutral5" sx={{ ':hover': { color: 'neutral1' }, cursor: 'pointer', gap: 1 }}>
+          <Type.Caption>Github</Type.Caption>
+          <ArrowSquareUpRight size={16} />
+        </Flex>
+      </a>
     </DesktopWrapper>
   )
 }
