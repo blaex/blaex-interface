@@ -2,7 +2,9 @@ import { Contract } from '@ethersproject/contracts'
 import { parseEther } from '@ethersproject/units'
 import React, { useState } from 'react'
 import { UseMutationResult } from 'react-query'
+import { toast } from 'react-toastify'
 
+import ToastBody from 'components/@ui/ToastBody'
 import { Position } from 'entities/Position'
 import useRefetchQueries from 'hooks/helpers/ueRefetchQueries'
 import useUsdPrices from 'hooks/store/useUsdPrices'
@@ -80,7 +82,10 @@ const ClosePosition = ({
                 },
               }
             )
-          } catch (err) {}
+          } catch (err) {
+            setSubmitting(false)
+            toast.error(<ToastBody title="Error" message={err.message} />)
+          }
         }}
       />
     </>
