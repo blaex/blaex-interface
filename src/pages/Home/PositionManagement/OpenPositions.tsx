@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers'
 import { UseMutationResult } from 'react-query'
 
@@ -53,7 +54,13 @@ export default function OpenPositions() {
   const mutation = useContractMutation(PerpsMarketContract)
   return (
     <Box sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <Table data={openPositions} restrictHeight isLoading={false} columns={columns} externalSource={mutation} />
+      <Table
+        data={openPositions}
+        restrictHeight
+        isLoading={false}
+        columns={columns}
+        externalSource={{ contract: PerpsMarketContract, mutation }}
+      />
     </Box>
   )
 }
@@ -180,10 +187,14 @@ const columns: any = [
     dataIndex: 'action',
     key: 'action',
     style: { minWidth: '100px', textAlign: 'right' },
-    render: (item: Position, index: number, mutation: UseMutationResult) => {
+    render: (
+      item: Position,
+      index: number,
+      { mutation, contract }: { mutation: UseMutationResult; contract: Contract }
+    ) => {
       return (
         <Box pr={3}>
-          <ClosePosition position={item} mutation={mutation} />
+          <ClosePosition position={item} mutation={mutation} contract={contract} />
         </Box>
       )
     },

@@ -1,3 +1,4 @@
+import { Contract } from '@ethersproject/contracts'
 import { parseEther } from '@ethersproject/units'
 import React, { useState } from 'react'
 import { UseMutationResult } from 'react-query'
@@ -14,7 +15,15 @@ import { calculateAcceptablePrice } from 'utils/web3/trades'
 
 import ClosePositionModal from './ClosePositionModal'
 
-const ClosePosition = ({ position, mutation }: { position: Position; mutation: UseMutationResult }) => {
+const ClosePosition = ({
+  position,
+  contract,
+  mutation,
+}: {
+  position: Position
+  contract: Contract
+  mutation: UseMutationResult
+}) => {
   const refetchQueries = useRefetchQueries()
   const [isOpen, setIsOpen] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -39,36 +48,39 @@ const ClosePosition = ({ position, mutation }: { position: Position; mutation: U
         isOpen={isOpen}
         size={position.sizeInUsd}
         setIsOpen={setIsOpen}
-        close={(amount: number) => {
+        close={async (amount: number) => {
           if (!priceBn) return
           const amountBn = parseEther(amount.toString())
           setSubmitting(true)
-          mutation.mutate(
-            {
-              method: 'createOrder',
-              params: [
-                {
-                  market: 1,
-                  collateralToken: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
-                  sizeDeltaUsd: amountBn,
-                  collateralDeltaUsd: amountBn.mul(position.collateralInUsd.bn).div(position.sizeInUsd.bn),
-                  triggerPrice: priceBn,
-                  acceptablePrice: calculateAcceptablePrice(priceBn, position.isLong),
-                  orderType: OrderType.MarketDecrease,
-                  isLong: position.isLong,
-                },
-              ],
-              // gasLimit: 1000000,
-            },
-            {
-              onSettled: (data) => {
-                setSubmitting(false)
-              },
-              onSuccess: () => {
-                refetchQueries(['getOpenPositions'])
-              },
+
+          try {
+            const payload = {
+              market: 1,
+              collateralToken: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
+              sizeDeltaUsd: amountBn,
+              collateralDeltaUsd: amountBn.mul(position.collateralInUsd.bn).div(position.sizeInUsd.bn),
+              triggerPrice: priceBn,
+              acceptablePrice: calculateAcceptablePrice(priceBn, position.isLong),
+              orderType: OrderType.MarketDecrease,
+              isLong: position.isLong,
             }
-          )
+            const gasLimit = await contract.estimateGas.createOrder(payload)
+            mutation.mutate(
+              {
+                method: 'createOrder',
+                params: [payload],
+                gasLimit: gasLimit.mul(1.2),
+              },
+              {
+                onSettled: (data) => {
+                  setSubmitting(false)
+                },
+                onSuccess: () => {
+                  refetchQueries(['getOpenPositions'])
+                },
+              }
+            )
+          } catch (err) {}
         }}
       />
     </>
