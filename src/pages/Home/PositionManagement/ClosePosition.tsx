@@ -58,7 +58,7 @@ const ClosePosition = ({ position, mutation }: { position: Position; mutation: U
                   isLong: position.isLong,
                 },
               ],
-              gasLimit: 1000000,
+              // gasLimit: 1000000,
             },
             {
               onSettled: (data) => {
