@@ -1,11 +1,13 @@
+import { NETWORK } from 'utils/config/constants'
 import { Chain, NativeCurrency } from 'utils/web3/types'
 
 export const SEPOLIA = 11155111
+export const BLAST_MAINNET = 81457
 export const BLAST_TESTNET = 168587773
-export const DEFAULT_CHAIN_ID = BLAST_TESTNET
+export const DEFAULT_CHAIN_ID = NETWORK === 'mainnet' ? BLAST_MAINNET : BLAST_TESTNET
 export const FAUCET_CHAIN_ID = SEPOLIA
 
-export const SUPPORTED_CHAIN_IDS: number[] = [SEPOLIA, BLAST_TESTNET]
+export const SUPPORTED_CHAIN_IDS: number[] = NETWORK === 'mainnet' ? [BLAST_MAINNET] : [SEPOLIA, BLAST_TESTNET]
 
 const NATIVE_CURRENCIES: { [key: string]: NativeCurrency } = {
   ETH: {
@@ -31,6 +33,11 @@ const SECONDARY_TOKENS: {
       address: '0x4200000000000000000000000000000000000022',
     },
   ],
+  [BLAST_MAINNET]: [
+    {
+      address: '0x4300000000000000000000000000000000000003',
+    },
+  ],
 }
 
 const CHAINS: { [key: number]: Chain } = {
@@ -51,6 +58,15 @@ const CHAINS: { [key: number]: Chain } = {
     rpcUrl: 'https://sepolia.blast.io',
     blockExplorerUrl: 'https://testnet.blastscan.io',
     secondaryTokens: SECONDARY_TOKENS[BLAST_TESTNET],
+  },
+  [BLAST_MAINNET]: {
+    id: `0x${BLAST_MAINNET.toString(16)}`,
+    token: NATIVE_CURRENCIES.ETH.symbol,
+    label: 'Blast Mainnet',
+    icon: 'BLAST',
+    rpcUrl: 'https://rpc.blast.io',
+    blockExplorerUrl: 'https://blastscan.io',
+    secondaryTokens: SECONDARY_TOKENS[BLAST_MAINNET],
   },
 }
 
