@@ -71,7 +71,7 @@ const ClosePosition = ({
               {
                 method: 'createOrder',
                 params: [payload],
-                gasLimit: gasLimit.mul(1.2),
+                gasLimit: gasLimit.mul(120).div(100),
               },
               {
                 onSettled: (data) => {
