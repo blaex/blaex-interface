@@ -11,6 +11,8 @@ import { Box, Flex, Type } from 'theme/base'
 import { NAVBAR_HEIGHT } from 'utils/config/constants'
 import { ELEMENT_IDS } from 'utils/config/keys'
 
+import Footer from './@layouts/Footer'
+
 const AppWrapper = ({ children }: { children: ReactNode }) => {
   useChainRestrict()
   useEagerConnect()
@@ -25,6 +27,7 @@ const AppWrapper = ({ children }: { children: ReactNode }) => {
           {children}
           <ToastContainer theme="dark" limit={3} autoClose={5000} />
         </Box>
+        <Footer height={40} />
       </Flex>
       {dialog && (
         <Flex
