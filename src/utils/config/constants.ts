@@ -11,6 +11,8 @@ export const LINKS = {
   webapp: 'https://app.blaex.io',
   baseTelegram: 'https://t.me',
   docs: 'https://docs.blaex.io/',
+  github: 'https://github.com/blaex',
+  twitter: 'https://twitter.com/blaex_xyz',
 }
 
 export const NAVBAR_HEIGHT = 60
