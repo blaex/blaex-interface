@@ -3,17 +3,27 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_perpsVault",
         "type": "address"
       },
       {
         "internalType": "address",
+        "name": "_usdb",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_blastPoints",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_pyth",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_owner",
         "type": "address"
       }
     ],
@@ -26,14 +36,128 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "orderId",
+        "name": "keeperFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "KeeperFeeChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "marketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "priceFeedId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxSkew",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "MarketCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "marketId",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "executeTime",
+        "name": "maxSkew",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "MarketUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxCollateral",
+        "type": "uint256"
+      }
+    ],
+    "name": "MaxCollateralChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxLeverage",
+        "type": "uint256"
+      }
+    ],
+    "name": "MaxLeverageChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "minCollateral",
+        "type": "uint256"
+      }
+    ],
+    "name": "MinCollateralChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "orderId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "reason",
+        "type": "bytes32"
       }
     ],
     "name": "OrderCanceled",
@@ -51,13 +175,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "executePrice",
+        "name": "executionPrice",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "executeTime",
+        "name": "executionTime",
         "type": "uint256"
       }
     ],
@@ -70,20 +194,21 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "orderFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "OrderFeeChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "orderId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "enum IPerpsMarket.OrderType",
-        "name": "orderType",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "isLong",
-        "type": "bool"
       },
       {
         "indexed": false,
@@ -99,9 +224,9 @@
       },
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "collateralToken",
-        "type": "address"
+        "internalType": "bool",
+        "name": "isLong",
+        "type": "bool"
       },
       {
         "indexed": false,
@@ -130,23 +255,48 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "executionPrice",
+        "name": "orderFees",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "protocolFees",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "keeperFees",
+        "name": "executionFees",
         "type": "uint256"
       }
     ],
     "name": "OrderSubmitted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "positionId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "returnedCollateral",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "orderFees",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "executionFees",
+        "type": "uint256"
+      }
+    ],
+    "name": "PositionLiquidated",
     "type": "event"
   },
   {
@@ -172,9 +322,9 @@
       },
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "collateralToken",
-        "type": "address"
+        "internalType": "bool",
+        "name": "isLong",
+        "type": "bool"
       },
       {
         "indexed": false,
@@ -221,17 +371,67 @@
       {
         "indexed": false,
         "internalType": "bool",
-        "name": "isLong",
+        "name": "isClose",
         "type": "bool"
       },
       {
         "indexed": false,
         "internalType": "bool",
-        "name": "isClose",
+        "name": "isLiquidated",
         "type": "bool"
       }
     ],
     "name": "PositionModified",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "positionId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "executionPrice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "executionTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "SltpExecuted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "positionId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "sl",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tp",
+        "type": "uint256"
+      }
+    ],
+    "name": "SltpUpdated",
     "type": "event"
   },
   {
@@ -242,6 +442,45 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "LIQUIDATE_PERCENT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PERPS_VAULT",
+    "outputs": [
+      {
+        "internalType": "contract IPerpsVault",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PYTH",
+    "outputs": [
+      {
+        "internalType": "contract IPyth",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -278,6 +517,153 @@
             "internalType": "bytes32",
             "name": "priceFeedId",
             "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxSkew",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "enable",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "size",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "skew",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lastFundingRate",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lastFundingValue",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastFundingTime",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IPerpsMarket.Market",
+        "name": "market",
+        "type": "tuple"
+      }
+    ],
+    "name": "_indexPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "currentPrice",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_positionId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_unsafe",
+        "type": "bool"
+      }
+    ],
+    "name": "calculatePosition",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "collateralInUsd",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sizeInUsd",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "positionPnl",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "fundingPnl",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_positionId",
+        "type": "uint256"
+      }
+    ],
+    "name": "canLiquidate",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "cancelOrder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "priceFeedId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxSkew",
+            "type": "uint256"
           }
         ],
         "internalType": "struct IPerpsMarket.CreateMarketParams",
@@ -300,11 +686,6 @@
             "type": "uint256"
           },
           {
-            "internalType": "address",
-            "name": "collateralToken",
-            "type": "address"
-          },
-          {
             "internalType": "uint256",
             "name": "sizeDeltaUsd",
             "type": "uint256"
@@ -325,13 +706,13 @@
             "type": "uint256"
           },
           {
-            "internalType": "enum IPerpsMarket.OrderType",
-            "name": "orderType",
-            "type": "uint8"
+            "internalType": "bool",
+            "name": "isLong",
+            "type": "bool"
           },
           {
             "internalType": "bool",
-            "name": "isLong",
+            "name": "isIncrease",
             "type": "bool"
           }
         ],
@@ -359,13 +740,60 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "enableExchange",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes[]",
+        "name": "_priceUpdateData",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "executeOrder",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_positionId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes[]",
+        "name": "_priceUpdateData",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "executeSltp",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_marketId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getExecutionPrice",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "currentPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "executionTime",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -375,7 +803,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "id",
+        "name": "_id",
         "type": "uint256"
       }
     ],
@@ -392,6 +820,21 @@
             "internalType": "string",
             "name": "symbol",
             "type": "string"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "priceFeedId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxSkew",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "enable",
+            "type": "bool"
           },
           {
             "internalType": "uint256",
@@ -417,16 +860,6 @@
             "internalType": "uint256",
             "name": "lastFundingTime",
             "type": "uint256"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "priceFeedId",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bool",
-            "name": "enable",
-            "type": "bool"
           }
         ],
         "internalType": "struct IPerpsMarket.Market",
@@ -441,113 +874,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getOpenOrders",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "market",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "collateralToken",
-            "type": "address"
-          },
-          {
-            "internalType": "enum IPerpsMarket.OrderType",
-            "name": "orderType",
-            "type": "uint8"
-          },
-          {
-            "internalType": "uint256",
-            "name": "sizeDeltaUsd",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "collateralDeltaUsd",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "triggerPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "acceptablePrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "executionPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "protocolFees",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "keeperFees",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "submissionTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "executionTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isLong",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "isFilled",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "isCanceled",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct IPerpsMarket.Order[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "acccount",
+        "name": "_acccount",
         "type": "address"
       }
     ],
@@ -571,9 +898,9 @@
             "type": "uint256"
           },
           {
-            "internalType": "address",
-            "name": "collateralToken",
-            "type": "address"
+            "internalType": "bool",
+            "name": "isLong",
+            "type": "bool"
           },
           {
             "internalType": "uint256",
@@ -588,6 +915,21 @@
           {
             "internalType": "uint256",
             "name": "collateralInUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sl",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "paidFees",
             "type": "uint256"
           },
           {
@@ -606,18 +948,13 @@
             "type": "int256"
           },
           {
-            "internalType": "uint256",
-            "name": "paidFees",
-            "type": "uint256"
-          },
-          {
             "internalType": "bool",
-            "name": "isLong",
+            "name": "isClose",
             "type": "bool"
           },
           {
             "internalType": "bool",
-            "name": "isClose",
+            "name": "isLiquidated",
             "type": "bool"
           }
         ],
@@ -633,7 +970,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "id",
+        "name": "_id",
         "type": "uint256"
       }
     ],
@@ -657,14 +994,14 @@
             "type": "uint256"
           },
           {
-            "internalType": "address",
-            "name": "collateralToken",
-            "type": "address"
+            "internalType": "bool",
+            "name": "isLong",
+            "type": "bool"
           },
           {
-            "internalType": "enum IPerpsMarket.OrderType",
-            "name": "orderType",
-            "type": "uint8"
+            "internalType": "bool",
+            "name": "isIncrease",
+            "type": "bool"
           },
           {
             "internalType": "uint256",
@@ -693,12 +1030,12 @@
           },
           {
             "internalType": "uint256",
-            "name": "protocolFees",
+            "name": "orderFees",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "keeperFees",
+            "name": "executionFees",
             "type": "uint256"
           },
           {
@@ -707,18 +1044,8 @@
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "executionTime",
-            "type": "uint256"
-          },
-          {
             "internalType": "bool",
-            "name": "isLong",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "isFilled",
+            "name": "isExecuted",
             "type": "bool"
           },
           {
@@ -738,8 +1065,104 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_acccount",
+        "type": "address"
+      }
+    ],
+    "name": "getPendingOrders",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "market",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isLong",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isIncrease",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sizeDeltaUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "collateralDeltaUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "triggerPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "acceptablePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "executionPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "orderFees",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "executionFees",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "submissionTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isExecuted",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isCanceled",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct IPerpsMarket.Order[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
-        "name": "id",
+        "name": "_id",
         "type": "uint256"
       }
     ],
@@ -763,9 +1186,9 @@
             "type": "uint256"
           },
           {
-            "internalType": "address",
-            "name": "collateralToken",
-            "type": "address"
+            "internalType": "bool",
+            "name": "isLong",
+            "type": "bool"
           },
           {
             "internalType": "uint256",
@@ -780,6 +1203,21 @@
           {
             "internalType": "uint256",
             "name": "collateralInUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sl",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "paidFees",
             "type": "uint256"
           },
           {
@@ -798,18 +1236,13 @@
             "type": "int256"
           },
           {
-            "internalType": "uint256",
-            "name": "paidFees",
-            "type": "uint256"
-          },
-          {
             "internalType": "bool",
-            "name": "isLong",
+            "name": "isClose",
             "type": "bool"
           },
           {
             "internalType": "bool",
-            "name": "isClose",
+            "name": "isLiquidated",
             "type": "bool"
           }
         ],
@@ -825,7 +1258,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "marketId",
+        "name": "_marketId",
         "type": "uint256"
       }
     ],
@@ -833,7 +1266,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "currentPrice",
         "type": "uint256"
       }
     ],
@@ -878,8 +1311,26 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_positionId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes[]",
+        "name": "_priceUpdateData",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "liquidate",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "protocolFee",
+    "name": "maxCollateral",
     "outputs": [
       {
         "internalType": "uint256",
@@ -891,16 +1342,42 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "maxLeverage",
+    "outputs": [
       {
-        "internalType": "bool",
-        "name": "_enableExchange",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "setEnableExchange",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "minCollateral",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "orderFee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -920,11 +1397,50 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_protocolFee",
+        "name": "_maxCollateral",
         "type": "uint256"
       }
     ],
-    "name": "setProtocolFee",
+    "name": "setMaxCollateral",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_maxLeverage",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxLeverage",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_minCollateral",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMinCollateral",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_orderFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "setOrderFee",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -948,6 +1464,52 @@
       }
     ],
     "name": "setRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxSkew",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_enable",
+        "type": "bool"
+      }
+    ],
+    "name": "updateMarketSettings",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_positionId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_sl",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tp",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateSltp",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

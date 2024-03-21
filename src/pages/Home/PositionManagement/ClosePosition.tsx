@@ -56,7 +56,7 @@ const ClosePosition = ({
               market: 1,
               sizeDeltaUsd: amountBn,
               collateralDeltaUsd: amountBn.mul(position.collateralInUsd.bn).div(position.sizeInUsd.bn),
-              triggerPrice: priceBn,
+              triggerPrice: 0,
               acceptablePrice: calculateAcceptablePrice(priceBn, !position.isLong),
               isLong: position.isLong,
               isIncrease: false,
