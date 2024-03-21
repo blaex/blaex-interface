@@ -5,7 +5,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import utc from 'dayjs/plugin/utc'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 
-import { DATE_FORMAT, DAYJS_FULL_DATE_FORMAT } from 'utils/config/constants'
+import { DAYJS_FULL_DATE_FORMAT } from 'utils/config/constants'
 import { isAddress } from 'utils/web3/contracts'
 
 dayjs.extend(relativeTime)
@@ -38,7 +38,7 @@ export const formatLocalDate = (date: string | number | undefined, format?: stri
   return dayjs
     .utc(date)
     .local()
-    .format(format ?? DATE_FORMAT)
+    .format(format ?? DAYJS_FULL_DATE_FORMAT)
 }
 
 export const formatDate = (date: string | number | undefined, format?: string) => {

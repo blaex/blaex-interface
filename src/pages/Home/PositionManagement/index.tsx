@@ -6,10 +6,12 @@ import { Box, Flex } from 'theme/base'
 
 import OpenPositions from './OpenPositions'
 import OrderHistory from './OrderHistory'
+import PendingOrders from './PendingOrders'
 import PositionHistory from './PositionHistory'
 
 const TABS = [
   { label: <Trans>Open Positions</Trans>, value: 'open-positions' },
+  { label: <Trans>Pending Orders</Trans>, value: 'pending-orders' },
   // { label: <Trans>Open Orders</Trans>, value: 'open-orders' },
   { label: <Trans>Orders History</Trans>, value: 'orders-history' },
   // { label: <Trans>Trades History</Trans>, value: 'trades-history' },
@@ -27,6 +29,7 @@ export default function PositionManagement({ isValid, alert }: { isValid: boolea
 
       <Box flex="1 0 0" sx={{ bg: 'background2', borderTop: 'small', borderTopColor: 'stroke', mt: '-1px' }}>
         {currentTab.value === 'open-positions' && <>{isValid ? <OpenPositions /> : alert}</>}
+        {currentTab.value === 'pending-orders' && <>{isValid ? <PendingOrders /> : alert}</>}
         {currentTab.value === 'positions-history' && <PositionHistory />}
         {currentTab.value === 'orders-history' && <OrderHistory />}
       </Box>

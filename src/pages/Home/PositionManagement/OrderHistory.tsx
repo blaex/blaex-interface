@@ -9,7 +9,6 @@ import { useAuthContext } from 'hooks/web3/useAuth'
 import useChain from 'hooks/web3/useChain'
 import Table from 'theme/Table'
 import { Box, Flex, Type } from 'theme/base'
-import { ORDER_TYPE_TRANS } from 'utils/config/translations'
 import { addressShorten, formatNumber, formatRelativeDate } from 'utils/helpers/format'
 import { isAddress } from 'utils/web3/contracts'
 import { Chain } from 'utils/web3/types'
@@ -60,18 +59,22 @@ const columns: any = [
     title: 'Execution Time',
     dataIndex: 'executionTime',
     key: 'executionTime',
-    style: { minWidth: '130px', textAlign: 'left' },
+    style: { minWidth: '180px', textAlign: 'left' },
     render: (item: OffchainOrder) => {
       return <Type.Small>{formatRelativeDate(item.blockTime)}</Type.Small>
     },
   },
   {
     title: 'Type',
-    dataIndex: 'orderType',
-    key: 'orderType',
+    dataIndex: 'type',
+    key: 'type',
     style: { minWidth: '100px', textAlign: 'left' },
     render: (item: OffchainOrder) => {
-      return <Type.Small>{ORDER_TYPE_TRANS[item.orderType]}</Type.Small>
+      return (
+        <Type.Small>
+          {item.triggerPrice === 0 ? 'Market' : 'Limit'} {item.isIncrease ? ' Increase' : ' Decrease'}
+        </Type.Small>
+      )
     },
   },
   {
@@ -93,7 +96,9 @@ const columns: any = [
         <Flex sx={{ width: '100%', justifyContent: 'end', gap: 3 }}>
           <Flex flexDirection="column" sx={{ gap: 1 }}>
             <Type.Small display="block">${formatNumber(item.sizeDeltaUsd, 2, 2)}</Type.Small>
-            <Type.Small color="neutral5">{formatNumber(item.sizeDeltaUsd / item.executionPrice, 4, 4)}ETH</Type.Small>
+            {!!item.executionPrice && (
+              <Type.Small color="neutral5">{formatNumber(item.sizeDeltaUsd / item.executionPrice, 4, 4)}ETH</Type.Small>
+            )}
           </Flex>
           {/* <Button variant="normal" p={2} height={40}>
             <Pencil size={20} />
@@ -122,7 +127,7 @@ const columns: any = [
           <SignedText
             neg={true}
             fontInherit={true}
-            value={item.protocolFees}
+            value={item.orderFees}
             minDigit={2}
             maxDigit={2}
             prefix="$"
@@ -130,6 +135,15 @@ const columns: any = [
           />
         </Type.Small>
       )
+    },
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    style: { minWidth: '100px', textAlign: 'right', pr: 3 },
+    render: (item: OffchainOrder) => {
+      return <Type.Small>{item.status}</Type.Small>
     },
   },
   {

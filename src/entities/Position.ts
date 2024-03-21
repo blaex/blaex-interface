@@ -3,35 +3,37 @@ import { BigNumber } from '@ethersproject/bignumber'
 import Num from './Num'
 
 export interface Position {
-  account: string
-  collateralInUsd: Num
-  collateralToken: string
   id: number
-  isClose: boolean
-  isLong: boolean
-  latestInteractionFunding: Num
+  account: string
   market: number
-  paidFees: Num
-  paidFunding: Num
-  realisedPnl: Num
+  isLong: boolean
   sizeInToken: Num
   sizeInUsd: Num
+  collateralInUsd: Num
+  paidFees: Num
+  realisedPnl: Num
+  paidFunding: Num
+  latestInteractionFunding: Num
+  isClose: boolean
+  isLiquidated: boolean
 }
 
 export interface OnchainPosition {
-  account: string
-  collateralInUsd: BigNumber
-  collateralToken: string
   id: BigNumber
-  isClose: boolean
-  isLong: boolean
-  latestInteractionFunding: BigNumber
+  account: string
   market: BigNumber
-  paidFees: BigNumber
-  paidFunding: BigNumber
-  realisedPnl: BigNumber
-  sizeInToken: BigNumber
+  isLong: boolean
   sizeInUsd: BigNumber
+  sizeInToken: BigNumber
+  collateralInUsd: BigNumber
+  sl: BigNumber
+  tp: BigNumber
+  paidFees: BigNumber
+  realisedPnl: BigNumber
+  paidFunding: BigNumber
+  latestInteractionFunding: BigNumber
+  isClose: boolean
+  isLiquidated: boolean
 }
 
 export interface OffchainPosition {
@@ -43,18 +45,18 @@ export interface OffchainPosition {
   positionId: number
   account: string
   market: number
-  collateralToken: string
+  isLong: boolean
   sizeInUsd: number
   sizeInToken: number
   collateralInUsd: number
   lastSizeInUsd: number
   lastSizeInToken: number
   lastCollateralInUsd: number
+  paidFees: number
   realisedPnl: number
   paidFunding: number
   latestInteractionFunding: number
-  paidFees: number
-  isLong: boolean
   isClose: boolean
+  isLiquidated: boolean
   createdAt: string
 }

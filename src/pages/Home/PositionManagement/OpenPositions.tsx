@@ -34,16 +34,18 @@ export default function OpenPositions() {
             id: op[0]?.toNumber() ?? defaultValue,
             account: op[1],
             market: op[2]?.toNumber() ?? defaultValue,
-            collateralToken: op[3],
+            isLong: op[3],
             sizeInUsd: op[4] ? new Num(op[4]) : defaultValue,
             sizeInToken: op[5] ? new Num(op[5]) : defaultValue,
             collateralInUsd: op[6] ? new Num(op[6]) : defaultValue,
-            realisedPnl: op[7] ? new Num(op[7]) : defaultValue,
-            paidFunding: op[8] ? new Num(op[8]) : defaultValue,
-            latestInteractionFunding: op[9] ? new Num(op[9]) : defaultValue,
-            paidFees: op[10] ? new Num(op[10]) : defaultValue,
-            isLong: op[11],
-            isClose: op[12],
+            // sl: op[7] ? new Num(op[7]) : defaultValue,
+            // tp: op[8] ? new Num(op[8]) : defaultValue,
+            paidFees: op[9] ? new Num(op[9]) : defaultValue,
+            realisedPnl: op[10] ? new Num(op[10]) : defaultValue,
+            paidFunding: op[11] ? new Num(op[11]) : defaultValue,
+            latestInteractionFunding: op[12] ? new Num(op[12]) : defaultValue,
+            isClose: op[13],
+            isLiquidated: op[14],
           }
         })
       },
@@ -156,8 +158,8 @@ const columns: any = [
   },
   {
     title: 'PnL',
-    dataIndex: 'liquidatePrice',
-    key: 'liquidatePrice',
+    dataIndex: 'pnl',
+    key: 'pnl',
     style: { minWidth: '100px', textAlign: 'right' },
     render: (item: Position) => {
       return <OpeningPnL data={item} />

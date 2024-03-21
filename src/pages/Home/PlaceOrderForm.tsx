@@ -374,10 +374,10 @@ function MarketStats({ contract, price, leverage }: { contract: Contract; price?
       //   data.map((e) => e.toString())
       // )
       return {
-        longRate: data[2].isZero()
+        longRate: data[5].isZero()
           ? 50
-          : 50 + Number(formatEther(data[3].mul(BigNumber.from(10).pow(18)).div(data[2]))),
-        fundingRate: Number(formatEther(data[4])),
+          : 50 + Number(formatEther(data[6].mul(BigNumber.from(10).pow(18)).div(data[5]))),
+        fundingRate: Number(formatEther(data[7])),
       }
     },
     refetchInterval: 10000,
