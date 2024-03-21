@@ -20,7 +20,6 @@ import useERC20Approval from 'hooks/web3/useTokenApproval'
 import useWeb3 from 'hooks/web3/useWeb3'
 import { Button } from 'theme/Buttons'
 import { Box, Flex, Type } from 'theme/base'
-import { OrderType } from 'utils/config/constants'
 import { CONTRACT_KEYS } from 'utils/config/keys'
 import { formatNumber } from 'utils/helpers/format'
 import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
@@ -312,13 +311,12 @@ function Buttons({
         params: [
           {
             market: 1,
-            collateralToken: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
             sizeDeltaUsd: amountBn.mul(leverage),
             collateralDeltaUsd: amountBn,
-            triggerPrice: price.bn,
+            triggerPrice: 0,
             acceptablePrice: calculateAcceptablePrice(price.bn, isLong),
-            orderType: OrderType.MarketIncrease,
             isLong,
+            isIncrease: true,
           },
         ],
       },

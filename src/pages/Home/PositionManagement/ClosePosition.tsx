@@ -9,10 +9,6 @@ import { Position } from 'entities/Position'
 import useRefetchQueries from 'hooks/helpers/ueRefetchQueries'
 import useUsdPrices from 'hooks/store/useUsdPrices'
 import { Button } from 'theme/Buttons'
-import { OrderType } from 'utils/config/constants'
-import { CONTRACT_KEYS } from 'utils/config/keys'
-import { DEFAULT_CHAIN_ID } from 'utils/web3/chains'
-import { CONTRACT_ADDRESSES } from 'utils/web3/contracts'
 import { calculateAcceptablePrice } from 'utils/web3/trades'
 
 import ClosePositionModal from './ClosePositionModal'
@@ -58,13 +54,12 @@ const ClosePosition = ({
           try {
             const payload = {
               market: 1,
-              collateralToken: CONTRACT_ADDRESSES[DEFAULT_CHAIN_ID][CONTRACT_KEYS.USDB],
               sizeDeltaUsd: amountBn,
               collateralDeltaUsd: amountBn.mul(position.collateralInUsd.bn).div(position.sizeInUsd.bn),
               triggerPrice: priceBn,
-              acceptablePrice: calculateAcceptablePrice(priceBn, position.isLong),
-              orderType: OrderType.MarketDecrease,
+              acceptablePrice: calculateAcceptablePrice(priceBn, !position.isLong),
               isLong: position.isLong,
+              isIncrease: false,
             }
             const gasLimit = await contract.estimateGas.createOrder(payload)
             mutation.mutate(
